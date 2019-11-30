@@ -1,85 +1,15 @@
 <?php 
-  include("includes/config.php");
-  include("includes/db.php");
+ include("includes/header.php");
 ?>
-
-
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v3.8.6">
-    <title>Custom CMS · Baby Wearing</title>
-
-  
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet" crossorigin="anonymous">
-
-
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
-    <!-- Custom styles for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="css/blog.css" rel="stylesheet">
-  </head>
-  <body>
-    <div class="container">
-      <header class="blog-header py-3">
-        <div class="row flex-nowrap justify-content-between align-items-center">
-          <div class="col-4 pt-1">
-            <a class="text-muted btn" href="#">Book a meeting here</a>
+          <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
+            <div class="col-md-12 px-0">
+              <h1 class="display-4 font-italic">Everything You Need to Know to Wear Your Baby Safely & In Style</h1>
+              
+              <p class="lead my-3">Whether you’re pregnant, caring for your baby, interested in gentle parenting, or just want to be more natural yourself, you’ll find resources here to help</p>
+            
+            </div>
           </div>
-          <div class="col-4 d-flex justify-content-end align-items-center">
-            <a class="text-muted" href="#" aria-label="Search">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
-            </a>
-            <a class="btn btn-sm btn-outline-secondary" href="#">Login</a>
-          </div>
-        </div>
-      </header>
-
-      <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex justify-content-between">
-          <a class="p-2 text-muted" href="#">Consulatations</a>
-          <a class="p-2 text-muted" href="#">Baby Wraps</a>
-          <a class="p-2 text-muted" href="#">Events</a>
-          <a class="p-2 text-muted" href="#">Workshops</a>
-          <a class="p-2 text-muted" href="#">About Us</a>
-          <a class="p-2 text-muted" href="#">Reviews</a>
-        </nav>
-      </div>
-
-      <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-        <div class="col-md-12 px-0">
-          <h1 class="display-4 font-italic">Everything You Need to Know to Wear Your Baby Safely & In Style</h1>
           
-          <p class="lead my-3">Whether you’re pregnant, caring for your baby, interested in gentle parenting, or just want to be more natural yourself, you’ll find resources here to help</p>
-          <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
-        </div>
-      </div>
-
-      <div class="row mb-2">
-        <div class="col-md-6">
           <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
               <strong class="d-inline-block mb-2 text-primary">World</strong>
@@ -148,6 +78,7 @@
               <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
             </ol>
             <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
+            <a href="#" class="stretched-link">Continue reading</a>
           </div><!-- /.blog-post -->
 
           <div class="blog-post">
@@ -160,6 +91,7 @@
             </blockquote>
             <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
             <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
+            <a href="#" class="stretched-link">Continue reading</a>
           </div><!-- /.blog-post -->
 
           <div class="blog-post">
@@ -174,6 +106,7 @@
             </ul>
             <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
             <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
+            <a href="#" class="stretched-link">Continue reading</a>
           </div><!-- /.blog-post -->
 
           <nav class="blog-pagination">
@@ -183,74 +116,6 @@
 
         </div><!-- /.blog-main -->
 
-        <aside class="col-md-4 blog-sidebar">
-          <!-- search post field -->
-          <div class="p-4">
-            <h4 class="font-italic">Search</h4>
-            <form method="GET" action="results.php" class="form-inline">
-              <label class="sr-only" for="inlineFormInputName2">Name</label>
-              <input type="text" name="search" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Search...">     
-            </form>            
-          </div>          
+<?php include("includes/sidebar.php"); ?>
 
-          <div class="p-4 mb-3 bg-light rounded">
-            <h4 class="font-italic">About</h4>
-            <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-          </div>
-
-          <!-- subscribe form -->
-          <div class="p-4">
-            <h4 class="font-italic">Subscribe</h4>
-            <form method="POST">
-              <div class="form-group">
-              
-                <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-              </div>
-              
-              <div class="form-group">
-                <input type="email" name="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">        
-              </div>             
-              <button type="submit" class="btn btn-primary">Subscribe</button>
-            </form>
-          </div>
-
-          <div class="p-4">
-            <h4 class="font-italic">Archives</h4>
-            <ol class="list-unstyled mb-0">
-              <li><a href="#">March 2014</a></li>
-              <li><a href="#">February 2014</a></li>
-              <li><a href="#">January 2014</a></li>
-              <li><a href="#">December 2013</a></li>
-              <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
-            </ol>
-          </div>
-
-          <div class="p-4">
-            <h4 class="font-italic">Elsewhere</h4>
-            <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
-            </ol>
-          </div>
-        </aside><!-- /.blog-sidebar -->
-
-      </div><!-- /.row -->
-
-    </main><!-- /.container -->
-
-    <footer class="blog-footer">      
-        <a href="#">Back to top</a>
-    </footer>
-
-    <script src="js/bootstrap.js"></script>
-  </body>
-</html>
+<?php include("includes/footer.php"); ?>
