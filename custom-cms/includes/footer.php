@@ -1,5 +1,4 @@
-      </div><!-- /.row -->
-    </main><!-- /.container -->
+      
 
     <footer class="blog-footer">      
         <a href="#">Back to top</a>
