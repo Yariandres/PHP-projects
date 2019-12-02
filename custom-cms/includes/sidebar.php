@@ -17,14 +17,13 @@
       <div class="p-4">
         <h4 class="font-italic">Subscribe</h4>
         <form method="POST">
-          <div class="form-group">
-          
-            <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <div class="form-group">          
+            <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name...">
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
           
           <div class="form-group">
-            <input type="email" name="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp">        
+            <input type="email" name="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Email...">        
           </div>             
           <button type="submit" class="btn btn-primary">Subscribe</button>
         </form>
