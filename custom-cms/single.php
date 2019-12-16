@@ -70,7 +70,7 @@
 
       <div class="comment mt-5">
         <div class="comment-head">
-        <img width="50" height="50" class="rounded" src="https://media.licdn.com/dms/image/C4E03AQEie7UmApBWuw/profile-displayphoto-shrink_200_200/0?e=1580342400&v=beta&t=EMGY8bMdo2YrCfhl91CVENnqFlxfXv8QbAQ08RG-TGI" alt="Image of monica">
+        <img width="50" height="50" class="rounded" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2IaTJGPJYUd9cZ86kcJDTOeq_5y6_sZsdJM_27sC_Mgg4vEuviA&s" alt="Image of Natalia">
         <a href="#">Natalia S</a>
         <button class="btn btn-info btn-xs ml-4">Admin</button>     
 
