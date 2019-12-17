@@ -9,7 +9,7 @@
   $posts = $db->query($query);
   ?>   
           <div class="blog-header">
-           <h1 class="blog-title">Baby Wearing Posts</h1>
+           <h1 class="blog-title mt-5">Baby Wearing Posts</h1>
            <p class="lead blog-description">The official baby wearing blog!</p>
           </div>
 
@@ -18,7 +18,7 @@
           ?>
           
 
-          <div class="blog-post">
+          <div class="blog-post mt-5">
             <h2 class="blog-post-title">
               <a href="single.php?post=<?php echo $row['id'] ?>"><?php echo $row['title']; ?></a>
             </h2>
@@ -40,8 +40,7 @@
         </div><!-- /.blog-main -->
 
         <!-- SIDE BAR -->     
-        <?php include("includes/sidebar.php");?>           
-
+        <?php include("includes/sidebar.php");?>
     <!-- Footer  -->    
     <?php include("includes/footer.php");?> 
   </body>
