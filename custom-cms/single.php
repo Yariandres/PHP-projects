@@ -1,11 +1,29 @@
 <?php include("includes/header.php");
-
   if (isset($_GET['post'])){
     $id = mysqli_real_escape_string($db , $_GET['post']);
     $query = "SELECT * FROM posts WHERE id='$id'";
   }
 
   $posts = $db->query($query);
+
+  if (isset($_POST['post_comment'])) {
+    $name = mysqli_real_escape_string($db , $_POST['name']);
+    $comment = mysqli_real_escape_string($db , $_POST['comment']);
+
+    if(isset($_POST['website'])) {
+      $website = mysqli_real_escape_string($db , $_POST['website']);
+    } else {
+      $website = "";
+    }
+
+    $query = "INSERT INTO comments (name, comment, post, website) VALUES('$name', '$comment', '$id', '$website')";
+
+    if ($db->query($query)) {
+      echo "<script>alert('comment inserted!')</script>";
+    } else {
+      echo "<script>alert('comment not inserted.')</script>";
+    }
+  }
 
 ?>
         <br>
@@ -29,7 +47,9 @@
         <hr>
 
         <blockquote>2 comments</blockquote>
-        <form>
+
+        <!-- FORM -->
+        <form method="post">
           <div class="form-group">
             <label for="exampleInputEmail1">Name</label>
             <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -38,7 +58,7 @@
 
           <div class="form-group">
             <label for="exampleInputEmail1">Website</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <input type="text" name="website" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
           </div>
 
           <div class="form-group">
@@ -47,7 +67,8 @@
           </div>
 
           <button type="submit" name="post_comment" class="btn btn-primary">Post Comment</button>
-        </form>
+        </form> <!-- /FORM -->
+        
 
         <div class="comment mt-5">
         <div class="comment-head">
