@@ -21,6 +21,10 @@
       header("Location:single.php?post=$id");
     exit();
   }
+
+  $query = "SELECT * FROM comments WHERE post='$id' AND status='1'";
+  $comments = $db->query($query);
+
 ?>
         <br>
         <?php if($posts->num_rows > 0) { while($row = $posts->fetch_assoc()) {?>          
@@ -42,7 +46,7 @@
           <?php } }?>
         <hr>
 
-        <blockquote>2 comments</blockquote>
+        <blockquote><?php echo $comments->num_rows ?> comments</blockquote>
 
         <!-- FORM -->
         <form method="post">
@@ -60,31 +64,35 @@
           </div>
           <button type="submit" name="post_comment" class="btn btn-primary">Post Comment</button>
         </form> <!-- /FORM -->
-        
 
-        <div class="comment mt-5">
-        <div class="comment-head">
-        <img width="50" height="50" class="rounded" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.ug1hsAagPO-if-D9l5yNBgHaHa%26pid%3DApi&f=1" alt="Image of monica">          
-        <a href="#">Monica S</a>          
+              
 
-        <h5 class="mt-4">Coment by Monica</h5>
+        <?php while($comment = $comments->fetch_assoc()) {
+          
+          if ($comment['is_admin'] != 1) {
+        ?>
 
-        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-        <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>        
-        </div>
-      </div> 
+          <div class="comment mt-5">
+              <div class="comment-head">
+                
+                <img width="50" height="50" src="http://lorempixel.com/400/200" alt="user image">
+                <a href="#"><?php echo $comment['name']; ?></a>
+              </div>
+              <p><?php echo $comment['comment']; ?></p> 
+          </div>
 
-      <div class="comment mt-5">
-        <div class="comment-head">
-        <img width="50" height="50" class="rounded" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR2IaTJGPJYUd9cZ86kcJDTOeq_5y6_sZsdJM_27sC_Mgg4vEuviA&s" alt="Image of Natalia">
-        <a href="#">Natalia S</a>
-        <button class="btn btn-info btn-xs ml-4">Admin</button>     
+        <?php } else { ?>
 
-        <h5 class="mt-4">Coment by Natalia</h5>
-
-        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-        </div>
-      </div>
+          <div class="comment mt-5">
+            <div class="comment-head">
+              
+              <a href="http://lorempixel.com/400/200" class="btn btn-info btn-xs">Admin</a>
+              <a href="#"><?php echo $comment['name']; ?></a>
+            </div>
+            <p><?php echo $comment['comment']; ?></p>
+          </div>                
+            
+      <?php } }?>
 
       </div><!-- /.blog-main -->
 
