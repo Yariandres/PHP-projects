@@ -1,4 +1,5 @@
 <?php include("includes/header.php");
+
   if (isset($_GET['post'])){
     $id = mysqli_real_escape_string($db , $_GET['post']);
     $query = "SELECT * FROM posts WHERE id='$id'";
@@ -12,38 +13,33 @@
 
     if(isset($_POST['website'])) {
       $website = mysqli_real_escape_string($db , $_POST['website']);
-    } else {
+    }else {
       $website = "";
     }
-
-    $query = "INSERT INTO comments (name, comment, post, website) VALUES('$name', '$comment', '$id', '$website')";
-
-    if ($db->query($query)) {
-      echo "<script>alert('comment inserted!')</script>";
-    } else {
-      echo "<script>alert('comment not inserted.')</script>";
-    }
+    $query = "INSERT INTO comments (name,comment,post,website) VALUES('$name','$comment','$id','$website')";
+    $db->query($query);
+      header("Location:single.php?post=$id");
+    exit();
   }
-
 ?>
         <br>
         <?php if($posts->num_rows > 0) { while($row = $posts->fetch_assoc()) {?>          
 
           <div class="blog-post">
             <h2 class="blog-post-title">
-              <?php echo $row['title']; ?>
+              <?php echo $row['title'];?>
             </h2>
 
-            <p class="blog-post-meta"><?php echo $row['date']; ?> 
+            <p class="blog-post-meta"><?php echo $row['date'];?> 
               By 
-              <a href="#"><?php echo $row['author']; ?></a>
+              <a href="#"><?php echo $row['author'];?></a>
             </p>          
 
-            <?php echo $row['body']; ?>
+            <?php echo $row['body'];?>
     
           </div><!-- /.blog-post -->
 
-          <?php } } ?>
+          <?php } }?>
         <hr>
 
         <blockquote>2 comments</blockquote>
@@ -54,18 +50,14 @@
             <label for="exampleInputEmail1">Name</label>
             <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
           </div>
-
-
           <div class="form-group">
             <label for="exampleInputEmail1">Website</label>
             <input type="text" name="website" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
           </div>
-
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Write your comment</label>
             <textarea name="comment" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
           </div>
-
           <button type="submit" name="post_comment" class="btn btn-primary">Post Comment</button>
         </form> <!-- /FORM -->
         
@@ -97,7 +89,7 @@
       </div><!-- /.blog-main -->
 
       <!-- SIDE BAR -->     
-      <?php include("includes/sidebar.php"); ?>           
+      <?php include("includes/sidebar.php");?>           
 
       <!-- Footer  -->    
       <?php include("includes/footer.php");?>

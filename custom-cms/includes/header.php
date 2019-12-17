@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <?php 
   include("includes/config.php");
   include("includes/db.php");
@@ -5,20 +6,19 @@
   $query = "SELECT * FROM categories";
 
   $categories = $db->query($query);
-?>
+  ?>
 
 
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <!-- <link rel="icon" href="../../favicon.ico"> -->
-    
+    <!-- <link rel="icon" href="../../favicon.ico"> -->    
 
     <title>Blog Template for Bootstrap</title>
 
@@ -47,19 +47,17 @@
       <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
 
-          <?php if(isset($_GET['caterogy'])) { ?>            
+          <?php if(isset($_GET['caterogy'])) {?>            
             <a class="p-2" href="index.php">Home</a>
-          <?php } else {  ?>
+          <?php } else {?>
             <a class="p-2  active" href="index.php">Home</a>
-          <?php } ?>
+          <?php }?>
 
           <?php if($categories->num_rows > 0) {
             while($row = $categories->fetch_assoc()) {
             if (isset($_GET['category']) && $row['id'] == $_GET['category']) {?>
-            <a class="p-2 active" href="index.php?category=<?php echo $row['id'] ?>"><?php echo $row['text']; ?></a>
-          <?php } else echo "<a class='p-2' href='index.php?category=$row[id]'>$row[text]</a>";
-            } } ?>
-
+            <a class="p-2 active" href="index.php?category=<?php echo $row['id']?>"><?php echo $row['text'];?></a>
+          <?php } else echo "<a class='p-2' href='index.php?category=$row[id]'>$row[text]</a>";}}?>
         </nav>
       </div>
 

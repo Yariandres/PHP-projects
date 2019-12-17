@@ -7,8 +7,7 @@
   }  
 
   $posts = $db->query($query);
-
-?>   
+  ?>   
           <div class="blog-header">
            <h1 class="blog-title">Baby Wearing Posts</h1>
            <p class="lead blog-description">The official baby wearing blog!</p>
@@ -36,12 +35,12 @@
             <a href="single.php?post=<?php echo $row['id'] ?>" class="btn btn-primary">Continue reading</a>
           </div><!-- /.blog-post -->
 
-          <?php } } ?>
+          <?php } }?>
 
         </div><!-- /.blog-main -->
 
         <!-- SIDE BAR -->     
-        <?php include("includes/sidebar.php"); ?>           
+        <?php include("includes/sidebar.php");?>           
 
     <!-- Footer  -->    
     <?php include("includes/footer.php");?> 
