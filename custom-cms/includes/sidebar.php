@@ -14,7 +14,11 @@
       </div>
 
       <?php if(isset($_POST['subscribe'])) { 
-        $name = mysqli_real_escape_string($_POST['name']);
+        $name = mysqli_real_escape_string($db , $_POST['name']);
+        $email = mysqli_real_escape_string($db , $_POST['email']);
+
+        $query = "INSERT INTO subscribers (name,email) VALUES('$name','$email')";
+        $db->query($query);
       } ?>
       <!-- subscribe form -->
       <div class="p-4">
