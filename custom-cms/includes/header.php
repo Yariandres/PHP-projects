@@ -1,12 +1,9 @@
 <?php ob_start(); ?>
-<?php 
-  include("includes/config.php");
-  include("includes/db.php");
-  
+<?php  
   $query = "SELECT * FROM categories";
 
   $categories = $db->query($query);
-  ?>
+?>
 
 
 <!doctype html>
@@ -20,7 +17,7 @@
     <meta name="author" content="">
     <!-- <link rel="icon" href="../../favicon.ico"> -->    
 
-    <title>Blog Template for Bootstrap</title>
+    <title><?php echo $page_title ?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
