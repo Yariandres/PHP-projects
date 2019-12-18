@@ -44,7 +44,7 @@
       <div class="nav-scroller py-1 mb-2">
         <nav class="nav d-flex justify-content-between">
 
-          <?php if(isset($_GET['caterogy'])) {?>            
+          <?php if(isset($_GET['caterogy']) || strpos($_SERVER['REQUEST_URI'] , "index.php") === false) {?>            
             <a class="p-2" href="index.php">Home</a>
           <?php } else {?>
             <a class="p-2  active" href="index.php">Home</a>

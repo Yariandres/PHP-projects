@@ -23,8 +23,7 @@ include("includes/header.php");
           
           <?php if($posts->num_rows > 0) { 
             while($row = $posts->fetch_assoc()) { 
-          ?>
-          
+          ?>          
 
           <div class="blog-post mt-5">
             <h2 class="blog-post-title">
@@ -43,7 +42,10 @@ include("includes/header.php");
             <a href="single.php?post=<?php echo $row['id'] ?>" class="btn btn-primary">Continue reading</a>
           </div><!-- /.blog-post -->
 
-          <?php } }?>
+          <?php } } else { 
+            echo "<p>No matching posts... </p>";
+            
+          } ?>
 
           
 

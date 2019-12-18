@@ -42,13 +42,15 @@ include("includes/header.php");
             </p>          
 
             <?php $body = $row['body']; 
-              echo substr($body, 0, 300) . "...";
+              echo substr(strip_tags($body), 0, 300) . "...";
             ?>
             
             <a href="single.php?post=<?php echo $row['id'] ?>" class="btn btn-primary">Continue reading</a>
           </div><!-- /.blog-post -->
 
-          <?php } }?>
+          <?php } } else {
+            echo "<p>No Matching Posts</p>";            
+          }?>
 
         </div><!-- /.blog-main -->
 
