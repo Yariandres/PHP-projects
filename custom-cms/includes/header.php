@@ -51,6 +51,8 @@
             <a class="p-2" href="index.php">Home</a>
           <?php } else {?>
             <a class="p-2  active" href="index.php">Home</a>
+            <a class="p-2" href="about.php">About</a>
+            <a class="p-2" href="reviews.php">Reviews</a>
           <?php }?>
 
           <?php if($categories->num_rows > 0) {
@@ -69,7 +71,7 @@
         </div>
       </div>
 
-      <div class="row mb-2">
+      <!-- <div class="row mb-2">
         <div class="col-md-6">
           <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
             <div class="col p-4 d-flex flex-column position-static">
@@ -98,7 +100,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <div class="container">
