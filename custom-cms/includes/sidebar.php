@@ -13,6 +13,9 @@
         <p class="mb-0"><?php echo $about_text; ?></p>
       </div>
 
+      <?php if(isset($_POST['subscribe'])) { 
+        $name = mysqli_real_escape_string($_POST['name']);
+      } ?>
       <!-- subscribe form -->
       <div class="p-4">
         <h4 class="font-italic">Subscribe</h4>
@@ -25,9 +28,9 @@
           <div class="form-group">
             <input type="email" name="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Email...">        
           </div>             
-          <button type="submit" class="btn btn-primary">Subscribe</button>
+          <button type="submit" name="subscribe" class="btn btn-primary">Subscribe</button>
         </form>
-      </div>
+      </div><!-- /subscribe form -->
       <hr>
 
       <div class="p-4">
