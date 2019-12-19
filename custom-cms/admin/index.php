@@ -41,7 +41,7 @@ include("includes/sidebar.php");
               
             </tr>           
           </tbody>
-        </table>
+        </table><!-- /posts table -->
 
         <!-- COMENTS TABLE -->
         <h2>Recent Comments</h2>
@@ -73,7 +73,7 @@ include("includes/sidebar.php");
               
             </tr>           
           </tbody>
-        </table>
+        </table><!-- /comments table -->
 
         <!-- CATEGORY TABLE -->
         <h2>Recent Categories</h2>
@@ -104,7 +104,7 @@ include("includes/sidebar.php");
               <td><a href="#" class="btn btn-warning mr-1">Edit</a><a href="#" class="btn btn-danger">Delete</a></td>              
             </tr>           
           </tbody>
-        </table>
+        </table><!-- /categories table -->
       </div>
     </main>
   </div>
