@@ -35,8 +35,8 @@
   </head>
   <body class="text-center">
       <form class="form-signin">
-        <img class="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Welcome to your admin. Sign in?</h1>
+        <img class="mb-4" src="" alt="" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Welcome back! Sign in?</h1>
         <label for="inputEmail" class="sr-only">Email address</label>
         <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
@@ -45,7 +45,9 @@
         
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
-      <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+      <p class="mt-5 mb-3 text-muted" id="date"></p>
   </form>
+
+  <script src="js/script.js"></script>
 </body>
 </html>
