@@ -1,6 +1,20 @@
 <?php 
+include("includes/config.php");
+include("includes/db.php");
 include("includes/header.php");
 include("includes/sidebar.php");
+
+// GET ALL POSTS FROM DB
+$query = "SELECT * FROM posts ORDER BY id DESC";
+$posts = $db->query($query);
+
+// GET ALL COMMENTS FROM DB
+$query = "SELECT * FROM comments WHERE status='0' ORDER BY id DESC";
+$comments = $db->query($query);
+
+// GET ALL CATEGORIES FROM DB
+$query = "SELECT * FROM categories ORDER BY id DESC";
+$categories = $db->query($query);
 ?>
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>        
@@ -19,27 +33,17 @@ include("includes/sidebar.php");
             </tr>
           </thead>
           <tbody>
+            <?php while($row = $posts->fetch_assoc()) {?>
             <tr>
-              <td>1,001</td>
-              <td>Lorem</td>
-              <td>ipsum</td>
-              <td><a href="#" class="btn btn-warning mr-1">Edit</a><a href="#" class="btn btn-danger">Delete</a></td>
-           
+              <td><?php echo $row['date']; ?></td>
+              <td><?php echo $row['title']; ?></td>
+              <td><?php echo $row['author']; ?></td>
+              <td>
+                <a href="new_post.php?post=<?php echo $row['id']; ?>" class="btn btn-warning mr-1">Edit</a>
+                <a href="index.php?entity=post&action=delete&id=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a></td>           
             </tr>
-            <tr>
-              <td>1,002</td>
-              <td>amet</td>
-              <td>consectetur</td>
-              <td><a href="#" class="btn btn-warning mr-1">Edit</a><a href="#" class="btn btn-danger">Delete</a></td>
-            
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>Integer</td>
-              <td>nec</td>
-              <td><a href="#" class="btn btn-warning mr-1">Edit</a><a href="#" class="btn btn-danger">Delete</a></td>
-              
-            </tr>           
+            <?php }?> 
+
           </tbody>
         </table><!-- /posts table -->
 
@@ -54,24 +58,18 @@ include("includes/sidebar.php");
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>Lorem</td>
-              <td><a href="#" class="btn btn-success mr-1">Approve</a><a href="#" class="btn btn-danger">Delete</a></td>
-           
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>amet</td>
-              <td><a href="#" class="btn btn-success mr-1">Approve</a><a href="#" class="btn btn-danger">Delete</a></td>
-            
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>Integer</td>
-              <td><a href="#" class="btn btn-success mr-1">Approve</a><a href="#" class="btn btn-danger">Delete</a></td>
-              
-            </tr>           
+
+            <?php while($row = $comments->fetch_assoc()) {?>
+              <tr>
+                <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['comment']; ?></td>
+                <td>
+                  <a href="index.php?entity=comment&action=approve&id=<?php echo $row['id']; ?>" class="btn btn-success mr-1">Approve</a>
+                  <a href="index.php?entity=comment&action=delete&id=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a>
+                </td>           
+              </tr>           
+            <?php }?> 
+
           </tbody>
         </table><!-- /comments table -->
 
@@ -86,23 +84,19 @@ include("includes/sidebar.php");
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1,001</td>
-              <td>Lorem</td>
-              <td><a href="#" class="btn btn-warning mr-1">Edit</a><a href="#" class="btn btn-danger">Delete</a></td>
-           
-            </tr>
-            <tr>
-              <td>1,002</td>
-              <td>amet</td>
-              <td><a href="#" class="btn btn-warning mr-1">Edit</a><a href="#" class="btn btn-danger">Delete</a></td>
-            
-            </tr>
-            <tr>
-              <td>1,003</td>
-              <td>Integer</td>
-              <td><a href="#" class="btn btn-warning mr-1">Edit</a><a href="#" class="btn btn-danger">Delete</a></td>              
-            </tr>           
+
+            <?php while($row = $categories->fetch_assoc()) {?>
+              <tr>
+                <td><?php echo $row['id']; ?></td>
+                <td><?php echo $row['text']; ?></td>
+                <td>
+                  <a href="new_category.php?category=<?php echo $row['id']; ?>" class="btn btn-warning mr-1">Edit</a>
+
+                  <a href="index.php?enteti=category&action=delete&id=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a>
+                </td>           
+              </tr>
+            <?php }?> 
+                   
           </tbody>
         </table><!-- /categories table -->
       </div>
