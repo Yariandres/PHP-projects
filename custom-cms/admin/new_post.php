@@ -1,6 +1,13 @@
 <?php 
+// CONNECT TO DB 
+include("includes/config.php");
+include("includes/db.php");
+
 include("includes/header.php");
 include("includes/sidebar.php");
+
+$cats = $db->query("SELECT * FROM categories");
+
 ?>
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
         <h1 class="h2">Add New Post</h1>        
@@ -22,9 +29,10 @@ include("includes/sidebar.php");
             <div class="form-group">
               <label>Post Category : </label>
               <select class="custom-select" name="category">
-                <option>Wraps</option>
-                <option>Events</option>
-                <option>Workshops</option>
+                <?php while($row = $cats->fetch_assoc()) {?>
+                <option value="<?php echo $row['id']; ?>"><?php echo $row['text']; ?></option>
+                
+                <?php }?>
               </select><!-- /select group --> 
             </div><!-- /form group --> 
 
