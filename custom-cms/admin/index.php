@@ -4,6 +4,32 @@ include("includes/db.php");
 include("includes/header.php");
 include("includes/sidebar.php");
 
+if (isset($_GET['entity']) && isset($_GET['action']) && isset($_GET['id'])) {
+  $entity = mysqli_real_escape_string($db , $_GET['entity']);
+  $action = mysqli_real_escape_string($db , $_GET['action']);
+  $id = mysqli_real_escape_string($db , $_GET['id']);
+
+  if($action == "delete") {
+
+    if($entity == "post") {
+      $query = "DELETE FROM posts WHERE id = '$id'";
+    } else if ($entity == "comment") {
+      $query = "DELETE FROM comments WHERE id = '$id'";
+    } else {
+      $query = "DELETE FROM categories WHERE id = '$id'";
+      $q = "UPDATE posts SET category='0' WHERE category='$id'";
+    }
+
+  } else {
+    $query = "UPDATE comments set status = '1' WHERE id='$id'";    
+  }
+
+  $db->query($query);
+  if(isset($q)) {
+    $db->query($q);
+  }
+}
+
 // GET ALL POSTS FROM DB
 $query = "SELECT * FROM posts ORDER BY id DESC";
 $posts = $db->query($query);
@@ -48,7 +74,7 @@ $categories = $db->query($query);
         </table><!-- /posts table -->
 
         <!-- COMENTS TABLE -->
-        <h2>Recent Comments</h2>
+        <h2>Recent Comments (pending)</h2>
         <table class="table table-striped table-sm">
           <thead>
             <tr>
@@ -92,7 +118,7 @@ $categories = $db->query($query);
                 <td>
                   <a href="new_category.php?category=<?php echo $row['id']; ?>" class="btn btn-warning mr-1">Edit</a>
 
-                  <a href="index.php?enteti=category&action=delete&id=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a>
+                  <a href="index.php?entity=category&action=delete&id=<?php echo $row['id']; ?>" class="btn btn-danger">Delete</a>
                 </td>           
               </tr>
             <?php }?> 
