@@ -1,6 +1,16 @@
-<?php 
+<?php
+include("includes/config.php");
+include("includes/db.php");
+
 include("includes/header.php");
 include("includes/sidebar.php");
+
+if(isset($_POST['add_category'])) {
+  $category = mysqli_real_escape_string($db , $_POST['category']);
+  $query = "INSERT INTO categories (text) VALUE('$category')";
+  $db->query($query);
+}
+
 ?>
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
         <h1 class="h2">Add New Category</h1>        
