@@ -13,12 +13,26 @@ if (isset($_POST['add_post'])) {
   $body = mysqli_real_escape_string($db , $_POST['body']);
   $keywords = mysqli_real_escape_string($db , $_POST['keywords']);
 
-  $d = getDate();
-  $date = "$d[month], $d[mday], $d[year]";
+  if(isset($_POST['id'])) {
+    $id = mysqli_real_escape_string($db , $_POST['id']);
+    $query = "UPDATE posts SET title='$title', author='$author', category='$category', body='$body', keywords='$keywords' WHERE id ='$id' ";
+  } else {
+    $d = getDate();
+    $date = "$d[month], $d[mday], $d[year]";
 
-  $query = "INSERT INTO posts (title,author,category,body,keywords,date) VALUES('$title','$author','$category ','$body','$keywords','$date')";
+    $query = "INSERT INTO posts (title,author,category,body,keywords,date) VALUES('$title','$author','$category ','$body','$keywords','$date')";
+
+  }
+
+  
 
   $db->query($query);
+}
+
+if (isset($_GET['post'])) {
+  $id = mysqli_real_escape_string($db, $_GET['post']);
+  $p = $db->query("SELECT * FROM posts WHERE id = '$id'");
+  $p = $p->fetch_assoc();
 }
 
 // getting categories and assing it to cats variable 
@@ -31,15 +45,18 @@ $cats = $db->query("SELECT * FROM categories");
      
       <div class="table-responsive">
         <form method="post">
+          <?php if(isset($p)) { 
+            echo "<input type='hidden' value='$id' name='id'>";
+          } ?>
 
             <div class="form-group">
               <label>Post Title : </label>
-              <input type="text" class="form-control" name="title">
+              <input type="text" class="form-control" value="<?php echo @$p['title']; ?>" name="title">
             </div><!-- /form group --> 
 
             <div class="form-group">
               <label>Post Author : </label>
-              <input type="text" class="form-control" name="author">
+              <input type="text" class="form-control" value="<?php echo @$p['author']; ?>" name="author">
             </div><!-- /form group -->  
             
             <div class="form-group">
@@ -47,8 +64,10 @@ $cats = $db->query("SELECT * FROM categories");
               <select class="custom-select" name="category">
                 
               <!-- fetching categories from db  -->
-                <?php while($row = $cats->fetch_assoc()) {?>
-                  <option value="<?php echo $row['id']; ?>">
+                <?php while($row = $cats->fetch_assoc()) {
+                  $selected = ($row['id'] == $p['category'] ? "selected" : "");
+                  ?>
+                  <option value="<?php echo $row['id']; ?>" <?php echo $selected;?> >
                     <?php echo $row['text']; ?>
                   </option>                
                 <?php }?>
@@ -58,12 +77,14 @@ $cats = $db->query("SELECT * FROM categories");
 
             <div class="form-group">
               <label>Post Body : </label>
-              <textarea name="body" class="form-control"></textarea>
+              <textarea name="body" class="form-control">
+                <?php echo @$p['body']; ?>
+              </textarea>
             </div><!-- /form group -->
             
             <div class="form-group">
               <label>Post Keywords : </label>
-              <input type="text" class="form-control" name="keywords">
+              <input type="text" class="form-control" value="<?php echo @$p['keywords']; ?>" name="keywords">
             </div><!-- /form group --> 
 
           <div class="input-group">            
