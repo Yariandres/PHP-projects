@@ -6,6 +6,22 @@ include("includes/db.php");
 include("includes/header.php");
 include("includes/sidebar.php");
 
+if (isset($_POST['add_post'])) {
+  $title = mysqli_real_escape_string($db , $_POST['title']);
+  $author = mysqli_real_escape_string($db , $_POST['author']);
+  $category = mysqli_real_escape_string($db , $_POST['category']);
+  $body = mysqli_real_escape_string($db , $_POST['body']);
+  $keywords = mysqli_real_escape_string($db , $_POST['keywords']);
+
+  $d = getDate();
+  $date = "$d[month], $d[mday], $d[year]";
+
+  $query = "INSERT INTO posts (title,author,category,body,keywords,date) VALUES('$title','$author','$category ','$body','$keywords','$date')";
+
+  $db->query($query);
+}
+
+// getting categories and assing it to cats variable 
 $cats = $db->query("SELECT * FROM categories");
 
 ?>
@@ -29,10 +45,14 @@ $cats = $db->query("SELECT * FROM categories");
             <div class="form-group">
               <label>Post Category : </label>
               <select class="custom-select" name="category">
-                <?php while($row = $cats->fetch_assoc()) {?>
-                <option value="<?php echo $row['id']; ?>"><?php echo $row['text']; ?></option>
                 
+              <!-- fetching categories from db  -->
+                <?php while($row = $cats->fetch_assoc()) {?>
+                  <option value="<?php echo $row['id']; ?>">
+                    <?php echo $row['text']; ?>
+                  </option>                
                 <?php }?>
+
               </select><!-- /select group --> 
             </div><!-- /form group --> 
 
