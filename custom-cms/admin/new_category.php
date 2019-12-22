@@ -5,10 +5,26 @@ include("includes/db.php");
 include("includes/header.php");
 include("includes/sidebar.php");
 
+if(isset($_GET['category'])) {
+  $id = mysqli_real_escape_string($db , $_GET['category']);
+  $query = "SELECT * FROM categories WHERE id = '$id'";
+  $c = $db->query($query);
+  $c = $c->fetch_assoc();
+}
+
 if(isset($_POST['add_category'])) {
   $category = mysqli_real_escape_string($db , $_POST['category']);
-  $query = "INSERT INTO categories (text) VALUE('$category')";
-  $db->query($query);
+
+  if(isset($_GET['category'])) {
+    $query = "UPDATE categories SET text = '$category' WHERE id = '$id'";
+    $db->query($query);
+
+  } else {
+    $query = "INSERT INTO categories (text) VALUE('$category')";
+    $db->query($query);
+  }
+
+  
 }
 
 ?>
@@ -21,7 +37,8 @@ if(isset($_POST['add_category'])) {
 
             <div class="form-group">
               <label for="category">Category : </label>
-              <input type="text" class="form-control" name="category" id="category">
+
+              <input type="text" class="form-control" name="category" id="category" value="<?php echo @$c['text']; ?>">
             </div><!-- /form group -->       
 
           <div class="input-group">            
