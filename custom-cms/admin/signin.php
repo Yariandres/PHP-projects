@@ -15,6 +15,9 @@ if (isset($_POST['login'])) {
     $_SESSION['email'] = $email;
     header("Location:index.php");
     exit();
+  } else {
+      header("Location:signin.php?err_msg=Wrong Email or Password");
+    exit();
   }
 
 }
@@ -58,6 +61,10 @@ if (isset($_POST['login'])) {
   <body class="text-center">
 
       <form class="form-signin" method="POST">
+        <?php if(isset($_GET['err_msg'])) { 
+          echo "<div class='alert alert-danger'>$_GET[err_msg]</div>"; 
+        } ?>
+
         <img class="mb-4" src="" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">Sign in?</h1>
 

@@ -1,4 +1,13 @@
-<?php ?>
+<?php 
+session_start();
+
+if(!isset($_SESSION['email'])) {
+  header("Location:signin.php?err_msg=This is an Admin page, please login");
+  exit();
+}
+?>
+
+
   <!doctype html>
   <html lang="en">
     <head>
