@@ -19,9 +19,7 @@ if (isset($_POST['login'])) {
       header("Location:signin.php?err_msg=Wrong Email or Password");
     exit();
   }
-
 }
-
 ?>
 
 <!doctype html>

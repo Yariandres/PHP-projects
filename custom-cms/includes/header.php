@@ -1,117 +1,113 @@
 <?php ob_start(); ?>
-<?php  
-  $query = "SELECT * FROM categories";
+<?php
+$query = "SELECT * FROM categories";
 
-  $categories = $db->query($query);
+$categories = $db->query($query);
 ?>
 
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- <link rel="icon" href="../../favicon.ico"> -->    
 
-    <title><?php echo $page_title ?></title>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- <link rel="icon" href="../../favicon.ico"> -->
 
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+  <title><?php echo $page_title ?></title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="css/bootstrap.css" rel="stylesheet">
 
 
-    <!-- Custom styles for this template -->
-    <link href="css/blog.css" rel="stylesheet">
-  </head>
+  <!-- Custom styles for this template -->
+  <link href="css/blog.css" rel="stylesheet">
+</head>
 
-  <body>
-    <div class="container">
-      <header class="blog-header py-3">
-        <div class="row flex-nowrap justify-content-between align-items-center">
-          <div class="col-4 pt-1">
-            <a class="blog-header-logo text-dark" href="index.php">Logo</a>
-          </div>
-          
-          <div class="col-4 d-flex justify-content-end align-items-center">
-            <a class="btn btn-sm btn-outline-secondary" href="#">Book an Appointment</a>
-          </div>
+<body>
+  <div class="container">
+    <header class="blog-header py-3">
+      <div class="row flex-nowrap justify-content-between align-items-center">
+        <div class="col-4 pt-1">
+          <a class="blog-header-logo text-dark" href="index.php">Logo</a>
         </div>
-      </header>
 
-      <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex justify-content-between">
-
-          <?php if(isset($_GET['caterogy']) || strpos($_SERVER['REQUEST_URI'] , "index.php") === false) {?>            
-            <a class="p-2" href="index.php">Home</a>
-          <?php } else {?>
-            <a class="p-2  active" href="index.php">Home</a>
-            <a class="p-2" href="about.php">About</a>
-            <a class="p-2" href="reviews.php">Reviews</a>
-          <?php }?>
-
-          <?php if($categories->num_rows > 0) {
-            while($row = $categories->fetch_assoc()) {
-            if (isset($_GET['category']) && $row['id'] == $_GET['category']) {?>
-            <a class="p-2 active" href="index.php?category=<?php echo $row['id']?>"><?php echo $row['text'];?></a>
-          <?php } else echo "<a class='p-2' href='index.php?category=$row[id]'>$row[text]</a>";}}?>
-        </nav>
-      </div>
-
-      <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-        <div class="col-md-12 px-0">
-          <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
-          <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
-          <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
+        <div class="col-4 d-flex justify-content-end align-items-center">
+          <a class="btn btn-sm btn-outline-secondary" href="#">Book an Appointment</a>
         </div>
       </div>
+    </header>
 
-      <!-- <div class="row mb-2">
-        <div class="col-md-6">
-          <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-              <strong class="d-inline-block mb-2 text-primary">World</strong>
-              <h3 class="mb-0">Featured post</h3>
-              <div class="mb-1 text-muted">Nov 12</div>
-              <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-        
-            </div>
-            <div class="col-auto d-none d-lg-block">
-              <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-              <strong class="d-inline-block mb-2 text-success">Design</strong>
-              <h3 class="mb-0">Post title</h3>
-              <div class="mb-1 text-muted">Nov 11</div>
-              <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-       
-            </div>
-            <div class="col-auto d-none d-lg-block">
-              <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-            </div>
-          </div>
-        </div>
-      </div> -->
+    <div class="nav-scroller py-1 mb-2">
+      <nav class="nav d-flex justify-content-between">
+
+        <?php if (isset($_GET['caterogy']) || strpos($_SERVER['REQUEST_URI'], "index.php") === false) { ?>
+          <a class="p-2" href="index.php">Home</a>
+        <?php } else { ?>
+          <a class="p-2  active" href="index.php">Home</a>
+          <a class="p-2" href="about.php">About</a>
+          <a class="p-2" href="reviews.php">Reviews</a>
+        <?php } ?>
+
+        <?php if ($categories->num_rows > 0) {
+          while ($row = $categories->fetch_assoc()) {
+            if (isset($_GET['category']) && $row['id'] == $_GET['category']) { ?>
+              <a class="p-2 active" href="index.php?category=<?php echo $row['id'] ?>"><?php echo $row['text']; ?></a>
+        <?php } else echo "<a class='p-2' href='index.php?category=$row[id]'>$row[text]</a>";
+          }
+        } ?>
+      </nav>
     </div>
+  </div><!-- /container  -->
 
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-8 blog-main">
+  <div class="container-fluid">
+    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+      </ol>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="img/slider-img-1.jpg" class="d-block w-100" height="300" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>First slide label</h5>
+            <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="img/slider-img-2.jpg" class="d-block w-100" height="300" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Second slide label</h5>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="img/slider-img-3.jpg" class="d-block w-100" height="300" alt="...">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Third slide label</h5>
+            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
+    </div>
+  </div><!-- /container-fluid  -->
 
 
 
 
-
-  
-        
-
-
-
-
-    
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-8 blog-main">
