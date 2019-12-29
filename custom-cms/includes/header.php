@@ -29,19 +29,23 @@ $categories = $db->query($query);
 </head>
 
 <body>
-  <div class="container">
+  <div class="container-fluid">
     <header class="blog-header py-3">
       <div class="row flex-nowrap justify-content-between align-items-center">
         <div class="col-4 pt-1">
-          <a class="blog-header-logo text-dark" href="index.php">Logo</a>
+          <a href="index.php">
+            <img src="img/logo.png" width="auto" height="60" class="navbar-brand">
+          </a>
         </div>
 
         <div class="col-4 d-flex justify-content-end align-items-center">
-          <a class="btn btn-sm btn-outline-secondary" href="#">Book an Appointment</a>
+          <a class="btn btn-outline-success" href="#">Book an Appointment</a>
         </div>
       </div>
     </header>
+  </div><!-- /container  -->
 
+  <div class="container">
     <div class="nav-scroller py-1 mb-2">
       <nav class="nav d-flex justify-content-between">
 
@@ -49,8 +53,6 @@ $categories = $db->query($query);
           <a class="p-2" href="index.php">Home</a>
         <?php } else { ?>
           <a class="p-2  active" href="index.php">Home</a>
-          <a class="p-2" href="about.php">About</a>
-          <a class="p-2" href="reviews.php">Reviews</a>
         <?php } ?>
 
         <?php if ($categories->num_rows > 0) {
@@ -62,7 +64,8 @@ $categories = $db->query($query);
         } ?>
       </nav>
     </div>
-  </div><!-- /container  -->
+  </div> <!-- /container  -->
+
 
   <div class="container-fluid">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
@@ -104,9 +107,6 @@ $categories = $db->query($query);
       </a>
     </div>
   </div><!-- /container-fluid  -->
-
-
-
 
   <div class="container">
     <div class="row">
