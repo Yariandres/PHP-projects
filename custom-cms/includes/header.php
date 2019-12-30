@@ -81,21 +81,21 @@ $categories = $db->query($query);
         <div class="carousel-item active">
           <img src="img/slider-img-1.jpg" class="d-block w-100" alt="SzamoTulimy image">
           <div class="carousel-caption d-none d-md-block">
-            <h1 class="text-left animated bounce">First slide label</h1>
+            <h1 class="text-left animated bounce">Szamotulimy</h1>
             <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
           </div>
         </div>
         <div class="carousel-item">
           <img src="img/slider-img-2.jpg" class="d-block w-100" alt="SzamoTulimy image">
           <div class="carousel-caption d-none d-md-block">
-            <h1 class="text-left bounceInUp">Second slide label</h1>
+            <h2 class="text-left bounceInUp">Szamotulimy</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
         </div>
         <div class="carousel-item">
           <img src="img/slider-img-3.jpg" class="d-block w-100" alt="SzamoTulimy image">
           <div class="carousel-caption d-none d-md-block">
-            <h1 class="text-left fadeInDownBig">Third slide label</h1>
+            <h2 class="text-left fadeInDownBig">Third slide label</h2>
             <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
           </div>
         </div>

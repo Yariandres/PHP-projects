@@ -1,7 +1,7 @@
     <aside class="col-md-4 blog-sidebar">
       <!-- search post field -->
       <div class="p-4">
-        <h4 class="font-italic">Search</h4>
+        <h4>Search</h4>
         <form method="GET" action="results.php" class="form-inline">
           <label class="sr-only" for="inlineFormInputName2">Name</label>
           <input type="text" name="search" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Search...">
@@ -9,7 +9,7 @@
       </div>
 
       <div class="p-4 mb-3 bg-light rounded">
-        <h4 class="font-italic">About</h4>
+        <h4>About</h4>
         <p class="mb-0"><?php echo $about_text; ?></p>
       </div>
 
@@ -22,7 +22,7 @@
       } ?>
       <!-- subscribe form -->
       <div class="p-4">
-        <h4 class="font-italic">Subscribe</h4>
+        <h4>Subscribe</h4>
         <form method="POST">
           <div class="form-group">
             <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name...">
@@ -38,7 +38,7 @@
       <hr>
 
       <div class="p-4">
-        <h4 class="font-italic">Categories</h4>
+        <h4>Categories</h4>
         <?php $q = "SELECT * FROM categories";
         $categories = $db->query($q);
         ?>
