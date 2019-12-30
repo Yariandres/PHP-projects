@@ -72,30 +72,30 @@ $categories = $db->query($query);
 
   <div class="container-fluid">
     <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
+      <!-- <ol class="carousel-indicators">
         <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
         <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-      </ol>
+      </ol> -->
       <div class="carousel-inner">
         <div class="carousel-item active">
           <img src="img/slider-img-1.jpg" class="d-block w-100" alt="SzamoTulimy image">
           <div class="carousel-caption d-none d-md-block">
-            <h1 class="text-left animated bounce">Szamotulimy</h1>
+            <h1 class="text-left animated bounce">Szamotulimy Events</h1>
             <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
           </div>
         </div>
         <div class="carousel-item">
           <img src="img/slider-img-2.jpg" class="d-block w-100" alt="SzamoTulimy image">
           <div class="carousel-caption d-none d-md-block">
-            <h2 class="text-left bounceInUp">Szamotulimy</h2>
+            <h2 class="text-left bounceInUp">Szamotulimy Workshop</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
         </div>
         <div class="carousel-item">
           <img src="img/slider-img-3.jpg" class="d-block w-100" alt="SzamoTulimy image">
           <div class="carousel-caption d-none d-md-block">
-            <h2 class="text-left fadeInDownBig">Third slide label</h2>
+            <h2 class="text-left fadeInDownBig">Szamotulimy Speakers Experts</h2>
             <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
           </div>
         </div>

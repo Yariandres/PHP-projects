@@ -47,7 +47,11 @@
         <div class="container text-center">
           <div class="row">
             <div class="col m-4">
-              <small class="mb-3 text-light">&copy; 2017-2019</small>
+              <img src="img/facebook.png" class="mr-2" height="50" width="50" alt="facebook logo">
+              <img src="img/instagram.png" class="mr-2" height="50" width="50" alt="facebook logo">
+              <img src="img/gmail.png" class="mb-2" height="50" width="50" alt="facebook logo">
+              <br>
+              <small class="text-light">&copy; 2017-2019</small>
             </div>
           </div>
         </div><!-- /container  -->
