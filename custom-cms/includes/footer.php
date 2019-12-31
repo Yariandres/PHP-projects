@@ -35,7 +35,7 @@
             <div class="col-6 col-md">
               <h5 class="text-light">Location</h5>
               <ul class="list-unstyled text-small">
-                <li><a class="btn btn-outline-success" href="#">Email us</a></li>
+                <li><a class="btn btn-outline-primary" href="#">Email us</a></li>
 
               </ul>
             </div>
@@ -47,14 +47,20 @@
         <div class="container text-center">
           <div class="row">
             <div class="col m-4">
-              <img src="img/facebook.png" class="mr-2" height="50" width="50" alt="facebook logo">
-              <img src="img/instagram.png" class="mr-2" height="50" width="50" alt="facebook logo">
-              <img src="img/gmail.png" class="mb-2" height="50" width="50" alt="facebook logo">
-              <br>
-              <small class="text-light">&copy; 2017-2019</small>
+              <div class="social-container">
+
+                <ul class="social-icons">
+                  <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                  <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                  <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                </ul>
+
+                <!-- <img src="img/gmail.png" class="mb-2" height="50" width="50" alt="facebook logo"> -->
+                <br>
+                <small class="text-light">&copy; 2017-2019</small>
+              </div>
             </div>
-          </div>
-        </div><!-- /container  -->
+          </div><!-- /container  -->
 
       </footer> <!-- /footer -->
 

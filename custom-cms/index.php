@@ -21,7 +21,7 @@ if (isset($_GET['category'])) {
 $posts = $db->query($query);
 ?>
 <div class="blog-header">
-  <p class="lead m-5">The official baby wearing blog!</p>
+  <p class="lead my-5">The official baby wearing blog!</p>
 </div>
 
 <?php if ($posts->num_rows > 0) {
@@ -30,7 +30,7 @@ $posts = $db->query($query);
 
 
     <div class="blog-post mt-5">
-      <h2 class="blog-post-title">
+      <h2 class="lead">
         <a href="single.php?post=<?php echo $row['id'] ?>"><?php echo $row['title']; ?></a>
       </h2>
 

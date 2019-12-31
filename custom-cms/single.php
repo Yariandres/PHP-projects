@@ -43,7 +43,7 @@ $comments = $db->query($query);
   while ($row = $posts->fetch_assoc()) { ?>
 
     <div class="blog-post">
-      <h2 class="blog-post-title">
+      <h2 class="lead">
         <?php echo $row['title']; ?>
       </h2>
 

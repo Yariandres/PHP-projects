@@ -1,4 +1,11 @@
     <aside class="col-md-4 blog-sidebar">
+
+      <div class="p-4 mb-3 bg-light rounded mt-2">
+        <h4>About</h4>
+        <p class="mb-0"><?php echo $about_text; ?></p>
+      </div>
+
+
       <!-- search post field -->
       <div class="p-4">
         <h4>Search</h4>
@@ -6,11 +13,6 @@
           <label class="sr-only" for="inlineFormInputName2">Name</label>
           <input type="text" name="search" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Search...">
         </form>
-      </div>
-
-      <div class="p-4 mb-3 bg-light rounded">
-        <h4>About</h4>
-        <p class="mb-0"><?php echo $about_text; ?></p>
       </div>
 
       <?php if (isset($_POST['subscribe'])) {
@@ -32,7 +34,7 @@
           <div class="form-group">
             <input type="email" name="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Email...">
           </div>
-          <button type="submit" name="subscribe" class="btn btn-outline-success">Subscribe</button>
+          <button type="submit" name="subscribe" class="btn btn-outline-primary">Subscribe</button>
         </form>
       </div><!-- /subscribe form -->
       <hr>

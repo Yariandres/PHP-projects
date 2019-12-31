@@ -42,7 +42,7 @@ $categories = $db->query($query);
         </div>
 
         <div class="col-4 d-flex justify-content-end align-items-center">
-          <a class="btn btn-outline-success" href="#">Book an Appointment</a>
+          <a class="btn btn-outline-primary" href="#">Book an Appointment</a>
         </div>
       </div>
     </header>

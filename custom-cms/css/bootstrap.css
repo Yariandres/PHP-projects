@@ -2859,7 +2859,7 @@ fieldset:disabled a.btn {
 
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #007bff;
+  background-image: -webkit-linear-gradient(50deg, #007bff, rgb(131, 0, 143));;
   border-color: #007bff;
 }
 
