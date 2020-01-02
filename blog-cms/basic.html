@@ -28,7 +28,6 @@
       </button>
 
       <div class="collapse navbar-collapse" id="navbarCollapse">
-
         <ul class="navbar-nav m-auto">
           <li class="nav-item">
             <a href="myProfile.php" class="nav-link"><i class="fa fa-user text-primary"></i> My Profile</a>
@@ -59,19 +58,35 @@
           </li>
         </ul><!-- /ul  -->
 
-
         <ul class="navbar-nav ml-auto">
           <li class="nav-item"><a href="logout.php" class="nav-link"><i class="fa fa-user-times text-danger"></i>
               Logout</a></li>
         </ul><!-- /ul  -->
 
-
-      </div>
-
-
-    </div>
+      </div><!-- /collapse  -->
+    </div><!-- /container  -->
   </nav>
-  <!-- /nav  -->
+  <!-- /NAVBAR -->
+
+  <div class="jumbotron">
+    <h1>Basic</h1>
+  </div>
+
+
+  <!-- FOOTER  -->
+  <footer class="bg-dark text-light">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p class="lead text-center my-auto">
+            Theme By <a href="#">Yari Herrera </a>| All rights reserved | &copy; <span id="year"></span>
+          </p>
+        </div><!-- /col  -->
+      </div><!-- /row  -->
+    </div><!-- /container  -->
+
+  </footer>
+  <!-- /FOOTER  -->
 
 
 
@@ -84,6 +99,19 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+
+  <script>
+
+    // gets span location 
+    let span = document.querySelector('#year');
+    // new year object stored 
+    let date = new Date();
+    // gets year 
+    let year = date.getFullYear();
+
+    // writes year into span 
+    span.innerText = year;    
+  </script>
 </body>
 
 </html>
