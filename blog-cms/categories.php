@@ -14,7 +14,7 @@
   <!--  custom styles -->
   <link rel="stylesheet" href="css/style.css">
 
-  <title>Blog System</title>
+  <title>Categories</title>
 </head>
 
 <body>
@@ -73,14 +73,51 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="display-4">Baby Wearing Blog</h1>
+          <h1 class="lead"><i class="fa fa-edit text-primary"></i> Manage Categories</h1>
         </div>
-
       </div> <!-- /row  -->
     </div><!-- /container  -->
-
   </header>
   <!-- /HEADER  -->
+
+  <!-- MAIN  -->
+  <div class="section container py-2 mb-4">
+    <div class="row">
+      <div class="offset-lg-1 col-lg-10">
+        <form action="categories.php" method="post">
+          <div class="card mb-3">
+
+            <div class="card-header">
+              <h2 class="lead">Add new category</h2>
+            </div>
+
+            <div class="card-body bg-dark">
+              <div class="form-group">
+                <label class="text-light" for="title"> Category Title</label>
+                <input class="form-control" type="text" name="Title" id="title">
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6 mb-2">
+                  <a href="dashboard.php" class="btn btn-warning btn-block"><i class="fa fa-arrow-left"></i> to dashboard</a>
+                </div>
+
+                <div class="col-lg-6">
+                  <button type="button" name="Submit" class="btn btn-success btn-block">
+                    <i class="fa fa-check"></i> Publish
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div><!-- /row  -->
+  </div><!-- /container  -->
+
+  <!-- /MAIN  -->
 
 
   <!-- FOOTER  -->
@@ -101,18 +138,11 @@
 
 
 
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
   <script>
-
     // gets span location 
     let span = document.querySelector('#year');
     // new year object stored 
@@ -121,7 +151,7 @@
     let year = date.getFullYear();
 
     // writes year into span 
-    span.innerText = year;    
+    span.innerText = year;
   </script>
 </body>
 
