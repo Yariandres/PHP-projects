@@ -1,3 +1,21 @@
+<?php require_once("Includes/DB.php"); ?>
+<?php require_once("Includes/Functions.php"); ?>
+<?php require_once("Includes/Sessions.php"); ?>
+
+<?php
+
+if (isset($_POST["Submit"])) {
+  $Category = $_POST["CategoryTitle"];
+
+
+  if (empty($Category)) {
+    $_SESSION["ErrorMessage"] = "All fields must be filled out";
+    Redirect_to("Categories.php");
+  }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -59,7 +77,7 @@
         </ul><!-- /ul  -->
 
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a href="logout.php" class="nav-link"><i class="fa fa-user-times text-danger"></i>
+          <li class="nav-item"><a href="Logout.php" class="nav-link"><i class="fa fa-user-times text-danger"></i>
               Logout</a></li>
         </ul><!-- /ul  -->
 
@@ -84,7 +102,16 @@
   <div class="section container py-2 mb-4">
     <div class="row">
       <div class="offset-lg-1 col-lg-10">
-        <form action="categories.php" method="post">
+
+        <!-- displays messages  -->
+        <?php
+
+        echo ErrorMessage();
+        echo SuccessMessage();
+
+        ?>
+
+        <form action="Categories.php" method="post">
           <div class="card mb-3">
 
             <div class="card-header">
@@ -94,16 +121,16 @@
             <div class="card-body bg-dark">
               <div class="form-group">
                 <label class="text-light" for="title"> Category Title</label>
-                <input class="form-control" type="text" name="Title" id="title">
+                <input class="form-control" type="text" name="CategoryTitle" id="title">
               </div>
 
               <div class="row">
                 <div class="col-lg-6 mb-2">
-                  <a href="dashboard.php" class="btn btn-warning btn-block"><i class="fa fa-arrow-left"></i> to dashboard</a>
+                  <a href="Dashboard.php" class="btn btn-warning btn-block"><i class="fa fa-arrow-left"></i> to dashboard</a>
                 </div>
 
                 <div class="col-lg-6">
-                  <button type="button" name="Submit" class="btn btn-success btn-block">
+                  <button type="submit" name="Submit" class="btn btn-success btn-block">
                     <i class="fa fa-check"></i> Publish
                   </button>
                 </div>
