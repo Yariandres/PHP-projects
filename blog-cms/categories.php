@@ -73,7 +73,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="lead"><i class="fa fa-edit text-primary"></i> Manage Categories</h1>
+          <h1 class="lead"><i class="fa fa-edit"></i> Manage Categories</h1>
         </div>
       </div> <!-- /row  -->
     </div><!-- /container  -->
