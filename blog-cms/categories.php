@@ -8,6 +8,10 @@ if (isset($_POST["Submit"])) {
   $Category = $_POST["CategoryTitle"];
   $Admin = "Yari";
 
+  $CurrentTime = time();
+  $DateTime = strftime("%d  %B - %Y - %H:%M:%S", $CurrentTime);
+
+
 
   if (empty($Category)) {
     $_SESSION["ErrorMessage"] = "All fields must be filled out";
@@ -19,7 +23,23 @@ if (isset($_POST["Submit"])) {
     $_SESSION["ErrorMessage"] = "Category title should be less than 50 charecters";
     Redirect_to("Categories.php");
   } else {
-    // query to insert category in the DB when everything is fine 
+    // query to insert category in the DB when everything is fine
+    $sql = "INSERT INTO category(title, author, datetime)";
+    $sql .= "VALUE(:categoryName, :adminName, :dateTime)";
+    $stmt = $connectingDB->prepare($sql);
+    $stmt->bindValue(':categoryName', $Category);
+    $stmt->bindValue('adminName', $Admin);
+    $stmt->bindValue('dateTime', $DateTime);
+
+    $Execute = $stmt->execute();
+
+    if ($Execute) {
+      $_SESSION["SuccessMessage"] = "Category with id : " . $connectingDB->lastInsertId() . " Added Successfully";
+      Redirect_to("Categories.php");
+    } else {
+      $_SESSION["ErrorMessage"] = "Something went wrong, please try again!";
+      Redirect_to("Categories.php");
+    }
   }
 }
 
