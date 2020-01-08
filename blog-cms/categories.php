@@ -25,7 +25,7 @@ if (isset($_POST["Submit"])) {
   } else {
     // query to insert category in the DB when everything is fine
     $sql = "INSERT INTO category(title, author, datetime)";
-    $sql .= "VALUE(:categoryName, :adminName, :dateTime)";
+    $sql .= "VALUES(:categoryName, :adminName, :dateTime)";
     $stmt = $connectingDB->prepare($sql);
     $stmt->bindValue(':categoryName', $Category);
     $stmt->bindValue('adminName', $Admin);

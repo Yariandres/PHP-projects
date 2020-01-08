@@ -3,42 +3,51 @@
 <?php require_once("Includes/Sessions.php"); ?>
 
 <?php
-
 if (isset($_POST["Submit"])) {
-  $Category = $_POST["CategoryTitle"];
+  $PostTitle = $_POST["PostTitle"];
+  $Category = $_POST["Category"];
+  // to grab the image file 
+  $Image = $_FILES["Image"]["name"];
+  // saves image to Upload/folder
+  $Target = "Uploads/" . basename($_FILES["Image"]["name"]);
+  $PostText = $_POST["PostDescription"];
   $Admin = "Yari";
-
   $CurrentTime = time();
   $DateTime = strftime("%d  %B - %Y - %H:%M:%S", $CurrentTime);
 
-
-
-  if (empty($Category)) {
-    $_SESSION["ErrorMessage"] = "All fields must be filled out";
-    Redirect_to("Categories.php");
-  } elseif (strlen($Category) < 2) {
-    $_SESSION["ErrorMessage"] = "Category title should be greater than 2 charecters";
-    Redirect_to("Categories.php");
-  } elseif (strlen($Category) > 59) {
-    $_SESSION["ErrorMessage"] = "Category title should be less than 50 charecters";
-    Redirect_to("Categories.php");
+  if (empty($PostTitle)) {
+    $_SESSION["ErrorMessage"] = "Title cant be empty";
+    Redirect_to("AddNewPost.php");
+  } elseif (strlen($PostTitle) < 5) {
+    $_SESSION["ErrorMessage"] = "Post title should be greater than 5 charecters";
+    Redirect_to("AddNewPost.php");
+  } else if (strlen($PostText) > 999) {
+    $_SESSION["ErrorMessage"] = "Post description should be less than 1000 charecters";
+    Redirect_to("AddNewPost.php");
   } else {
-    // query to insert category in the DB when everything is fine
-    $sql = "INSERT INTO category(title, author, datetime)";
-    $sql .= "VALUE(:categoryName, :adminName, :dateTime)";
-    $stmt = $connectingDB->prepare($sql);
-    $stmt->bindValue(':categoryName', $Category);
-    $stmt->bindValue('adminName', $Admin);
-    $stmt->bindValue('dateTime', $DateTime);
 
+    global $connectingDB;
+
+    // query to insert Post in the DB when everything is fine
+    $sql = "INSERT INTO posts(datetime, title, category, author, image,post)";
+    $sql .= "VALUES(:dateTime, :postTitle, :categoryName, :adminName, :imageName, :postDescription)";
+
+    $stmt = $connectingDB->prepare($sql);
+    $stmt->bindValue(':dateTime', $DateTime);
+    $stmt->bindValue(':postTitle', $PostTitle);
+    $stmt->bindValue(':categoryName', $Category);
+    $stmt->bindValue(':adminName', $Admin);
+    $stmt->bindValue(':imageName', $Image);
+    $stmt->bindValue(':postDescription', $PostText);
     $Execute = $stmt->execute();
+    move_uploaded_file($_FILES["Image"]["tmp_name"], $Target);
 
     if ($Execute) {
-      $_SESSION["SuccessMessage"] = "Category with id : " . $connectingDB->lastInsertId() . " Added Successfully";
-      Redirect_to("Categories.php");
+      $_SESSION["SuccessMessage"] = "Post with id : " . $connectingDB->lastInsertId() . " Added Successfully";
+      Redirect_to("AddNewPost.php");
     } else {
       $_SESSION["ErrorMessage"] = "Something went wrong, please try again!";
-      Redirect_to("Categories.php");
+      Redirect_to("AddNewPost.php");
     }
   }
 }
@@ -61,7 +70,7 @@ if (isset($_POST["Submit"])) {
   <!--  custom styles -->
   <link rel="stylesheet" href="css/style.css">
 
-  <title>Categories</title>
+  <title>Add New Post</title>
 </head>
 
 <body>
@@ -140,9 +149,8 @@ if (isset($_POST["Submit"])) {
 
         ?>
 
-        <form action="Categories.php" method="post">
+        <form action="AddNewPost.php" method="post" enctype="multipart/form-data">
           <div class="card mb-3">
-
             <div class="card-body bg-dark">
 
               <div class="form-group">
@@ -157,7 +165,7 @@ if (isset($_POST["Submit"])) {
 
                   // fetching all the categories from category table
                   global $connectingDB;
-                  $sql = "SELECT * FROM category";
+                  $sql = "SELECT id, title FROM category";
                   $stmt = $connectingDB->query($sql);
 
                   while ($DataRows = $stmt->fetch()) {
@@ -165,7 +173,7 @@ if (isset($_POST["Submit"])) {
                     $CategoryName = $DataRows["title"];
 
                   ?>
-                    <option value=""><?php echo $CategoryName; ?></option>
+                    <option><?php echo $CategoryName; ?></option>
                   <?php } ?>
                 </select>
               </div>
@@ -179,7 +187,7 @@ if (isset($_POST["Submit"])) {
 
               <div class="form-group">
                 <label for="Post"><span class="FieldInfo text-light">Post :</span></label>
-                <textarea class="form-control" id="Post" name="PostDescription" id=""></textarea>
+                <textarea class="form-control" id="Post" name="PostDescription"></textarea>
               </div>
 
               <div class="row">
@@ -201,7 +209,6 @@ if (isset($_POST["Submit"])) {
       </div>
     </div><!-- /row  -->
   </div><!-- /container  -->
-
   <!-- /MAIN  -->
 
 
