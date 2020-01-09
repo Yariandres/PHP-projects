@@ -84,7 +84,7 @@
             <i class="fa fa-edit"></i> Add new post
           </a>
         </div><!-- /col-lg-3  -->
-        
+
 
         <div class="col-lg-3">
           <a href="Categories.php" class="btn btn-info btn-block mb-2">
@@ -102,7 +102,7 @@
           <a href="Comments.php" class="btn btn-success btn-block">
             <i class="fa fa-check"></i> Approve Comments
           </a>
-        </div><!-- /col-lg-3  -->      
+        </div><!-- /col-lg-3  -->
 
       </div> <!-- /row  -->
     </div><!-- /container  -->
@@ -112,9 +112,9 @@
   <!-- MAIN  -->
   <section class="container mb-5">
     <div class="row">
-      <div class="col-lg-12">
-        <table class="table">
-          <thead>
+      <div class="col-sm-8 col-md-8 col-lg-12">
+        <table class="table table-striped table-hover">
+          <thead class="thead-dark">
             <tr>
               <th>#</th>
               <th>Title</th>
@@ -127,38 +127,63 @@
               <th>Live Preview</th>
             </tr>
           </thead><!-- /thead  -->
-          <?php 
-            global $connectingDB;
-            $sql = "SELECT * FROM posts";
-            $stmt = $connectingDB->query($sql);
-            while ($DataRows = $stmt->fetch()) {
-              $Id       = $DataRows["id"];
-              $DateTime = $DataRows["datetime"];
-              $PostTile = $DataRows["title"];
-              $Category = $DataRows["category"];
-              $Admin    = $DataRows["author"];
-              $Image    = $DataRows["image"];
-              $PostText = $DataRows["post"];          
+          <?php
+          global $connectingDB;
+          $sql = "SELECT * FROM posts";
+          $stmt = $connectingDB->query($sql);
+          $Sr = 0;
+          while ($DataRows = $stmt->fetch()) {
+            $Id       = $DataRows["id"];
+            $DateTime = $DataRows["datetime"];
+            $PostTile = $DataRows["title"];
+            $Category = $DataRows["category"];
+            $Admin    = $DataRows["author"];
+            $Image    = $DataRows["image"];
+            $PostText = $DataRows["post"];
+            $Sr++;
           ?>
-          <tbody>
-            <tr>
-              <td>#</td>
-              <td><?php echo $PostTile ?></td>
-              <td><?php echo $Category ?></td>
-              <td><?php echo $DateTime ?></td>
-              <td><?php echo $Admin ?></td>
-              <td><?php echo $Image ?></td>
-              <td>Comments</td>
-              <td>Action</td>
-              <td>Live Preview</td>
-            </tr>
-          </tbody><!-- /tbody  -->          
+            <tbody>
+              <tr>
+                <td><?php echo $Sr; ?></td>
+                <td>
+                  <!-- checks if title is loger than 10 charecters -->
+                  <?php if (strlen($PostTile) > 10) {
+                    $PostTile = substr($PostTile, 0, 10) . '...';
+                  }
+                  echo $PostTile;
+                  ?>
+                </td>
+                <td>
+                  <!-- checks if category name is loger than 10 charecters -->
+                  <?php if (strlen($Category) > 6) {
+                    $Category = substr($Category, 0, 6) . '...';
+                  }
+                  echo $Category;
+                  ?>
+                </td>
+                <td>
+                  <!-- checks if date & time name is loger than 10 charecters -->
+                  <?php if (strlen($DateTime) > 11) {
+                    $DateTime = substr($DateTime, 0, 11) . '...';
+                  }
+                  echo $DateTime; ?>
+                </td>
+                <td><?php echo $Admin; ?></td>
+                <td><img src="Uploads/<?php echo $Image; ?>" width="100" height="70" class="img-thumbnail"></td>
+                <td>Comments</td>
+                <td>
+                  <a href="#"><span class="btn btn-warning">Edit</span></a>
+                  <a href="#"><span class="btn btn-danger">Delete</span></a>
+                </td>
+                <td><a href="#"><span class="btn btn-primary">Live Preview</span></a></td>
+              </tr>
+            </tbody><!-- /tbody  -->
           <?php } ?>
 
-        </table><!-- /table  -->        
-      </div><!-- /col  -->      
-    </div><!-- /row  -->    
-  </section><!-- /section  -->  
+        </table><!-- /table  -->
+      </div><!-- /col  -->
+    </div><!-- /row  -->
+  </section><!-- /section  -->
   <!-- /MAIN  -->
 
   <!-- FOOTER  -->
