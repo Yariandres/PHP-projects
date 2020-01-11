@@ -54,9 +54,11 @@
         </ul><!-- /ul  -->
 
         <ul class="navbar-nav ml-auto">
-          <form class="form-inline d-none d-sm-block" action="Blog.php" method="post">
+          <form class="form-inline d-none d-sm-block" action="Blog.php">
             <input class="form-control mr-2" type="text" name="Search" placeholder="Search">
-            <button type="submit" class="btn btn-primary" name="SearchButton">Go</button>
+            <button class="btn btn-primary" name="SearchButton">Go</button>
+
+
           </form>
         </ul><!-- /ul  -->
 
@@ -65,11 +67,11 @@
   </nav>
   <!-- /NAVBAR -->
 
-  <div class="container">
+  <!-- <div class="container">
     <div class="jumbotron">
       <h1 class="display-4">Baby Wearing Blog</h1>
     </div>
-  </div>
+  </div> -->
 
   <!-- HEADER  -->
   <div class="container mb-5">
@@ -77,11 +79,24 @@
       <div class="col-sm-8">
 
         <?php
-
         global $connectingDB;
-        $sql = "SELECT * FROM posts ORDER BY id desc";
-        $stmt = $connectingDB->query($sql);
 
+        // SQL query when search button is active
+        if (isset($_GET["SearchButton"])) {
+          $Search = $_GET["Search"];
+
+          // matching search query 
+          $sql = "SELECT * FROM posts WHERE datetime LIKE :search OR title LIKE :search OR category LIKE :search OR post LIKE :search";
+
+          $stmt = $connectingDB->prepare($sql);
+          $stmt->bindValue(':search', '%' . $Search . '%');
+          $stmt->execute();
+        } else {
+          $sql = "SELECT * FROM posts ORDER BY id desc";
+          $stmt = $connectingDB->query($sql);
+        }
+
+        // the default SQL query        
         while ($DataRows = $stmt->fetch()) {
           $PostId          = $DataRows["id"];
           $DateTime        = $DataRows["datetime"];
