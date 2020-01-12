@@ -72,12 +72,6 @@
       <h1 class="display-4">Baby Wearing Blog</h1>
     </div>
   </div> -->
-  <!-- displays messages  -->
-
-  <?php
-  echo ErrorMessage();
-  echo SuccessMessage();
-  ?>
 
   <!-- HEADER  -->
   <div class="container mb-5">
@@ -98,7 +92,15 @@
           $stmt->bindValue(':search', '%' . $Search . '%');
           $stmt->execute();
         } else {
-          $sql = "SELECT * FROM posts ORDER BY id desc";
+
+          $PostIdFromURL = $_GET["id"];
+
+          if (!isset($PostIdFromURL)) {
+            $_SESSION["ErrorMessage"] = "Bad request";
+            Redirect_to("Blog.php");
+          }
+
+          $sql = "SELECT * FROM posts WHERE id='$PostIdFromURL' ";
           $stmt = $connectingDB->query($sql);
         }
 
@@ -130,15 +132,8 @@
               <hr>
 
               <?php
-              if (strlen($PostDescription < 150)) {
-                $PostDescription = substr($PostDescription, 0, 150) . '...';
-              }
-              echo '<p class\'lead\'>' . htmlentities($PostDescription) . '</p>';
+                echo '<p class\'lead\'>' . htmlentities($PostDescription) . '</p>';
               ?>
-
-              <a href="FullPost.php?id=<?php echo $PostId; ?>" class="float-right">
-                <span class="btn btn-outline-light text-dark">Read More</span>
-              </a>
 
             </div><!-- /card-body  -->
           </div><!-- /card  -->
