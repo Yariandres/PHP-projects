@@ -1,6 +1,8 @@
 <?php require_once("Includes/DB.php"); ?>
 <?php require_once("Includes/Functions.php"); ?>
 <?php require_once("Includes/Sessions.php"); ?>
+<?php $SearchQueryPerameter = $_GET["id"]; ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -73,7 +75,7 @@
     </div>
   </div> -->
 
-  <!-- HEADER  -->
+  <!-- MAIN  -->
   <div class="container mb-5">
     <div class="row">
       <div class="col-sm-8">
@@ -128,27 +130,55 @@
               <small class="text-muted">Written by: <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
 
               <span class="badge badge-light float-right">Comments 20</span>
-
               <hr>
-
               <?php
-                echo '<p class\'lead\'>' . htmlentities($PostDescription) . '</p>';
+              echo '<p class\'lead\'>' . htmlentities($PostDescription) . '</p>';
               ?>
 
             </div><!-- /card-body  -->
           </div><!-- /card  -->
         <?php } ?>
 
+        <hr>
+        <!-- comment area  -->
+        <form action="FullPost.php?id=<?php echo $SearchQueryPerameter; ?>" method="post">
+          <h5>Share your thoughs about this post?</h5>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Name</label>
+            <input type="text" name="commenterName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div><!-- /form-group -->
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email</label>
+            <input type="email" name="commenterEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div><!-- /form-group -->
+
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Comment</label>
+            <textarea name="commenterThoughts" class="form-control" id="exampleFormControlTextarea1" rows="3">
+
+            </textarea>
+          </div><!-- /form-group -->
+
+          <button type="submit" name="Submit" class="btn btn-primary">Submit</button>
+
+        </form><!-- /form  -->
+
+
+
+        <!-- /comment area  -->
+
       </div><!-- /col -->
 
-
       <div class="col-sm-4">
-        <p class="display-4">Hello world</p>
+        <p class="display-4">SIDE BAR</p>
       </div><!-- /col  -->
 
     </div> <!-- /row  -->
+
+
   </div><!-- /container  -->
-  <!-- /HEADER  -->
+  <!-- /MAIN  -->
 
 
   <!-- FOOTER  -->
