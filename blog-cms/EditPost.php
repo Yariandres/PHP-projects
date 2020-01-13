@@ -32,12 +32,25 @@ if (isset($_POST["Submit"])) {
 
     global $connectingDB;
 
-    $sql = "UPDATE posts SET 
-      title    ='$PostTitle', 
-      category = '$Category', 
-      image    = '$Image', 
-      post     = '$PostText' 
-      WHERE id = '$Parameter' ";
+    // if image is not empty then update image    
+    if (!empty($_FILES['Image']['name'])) {
+      $sql = "UPDATE posts SET 
+                title    ='$PostTitle', 
+                category = '$Category', 
+                image    = '$Image', 
+                post     = '$PostText' 
+                WHERE id = '$Parameter' ";
+    } else {
+
+      // otherwise do not update image 
+      $sql = "UPDATE posts SET 
+                title    ='$PostTitle', 
+                category = '$Category', 
+                post     = '$PostText' 
+                WHERE id = '$Parameter' ";
+    }
+
+
 
     $Execute = $connectingDB->query($sql);
 
