@@ -2,7 +2,11 @@
 <?php require_once("Includes/Functions.php"); ?>
 <?php require_once("Includes/Sessions.php"); ?>
 
+<?php ?>
+
 <?php
+$Parameter = $_GET["id"];
+
 if (isset($_POST["Submit"])) {
   $PostTitle = $_POST["PostTitle"];
   $Category = $_POST["Category"];
@@ -17,37 +21,34 @@ if (isset($_POST["Submit"])) {
 
   if (empty($PostTitle)) {
     $_SESSION["ErrorMessage"] = "Title cant be empty";
-    Redirect_to("AddNewPost.php");
+    Redirect_to("Posts.php");
   } elseif (strlen($PostTitle) < 5) {
     $_SESSION["ErrorMessage"] = "Post title should be greater than 5 charecters";
-    Redirect_to("AddNewPost.php");
+    Redirect_to("Posts.php");
   } else if (strlen($PostText) > 999) {
     $_SESSION["ErrorMessage"] = "Post description should be less than 1000 charecters";
-    Redirect_to("AddNewPost.php");
+    Redirect_to("Posts.php");
   } else {
 
     global $connectingDB;
 
-    // query to insert Post in the DB when everything is fine
-    $sql = "INSERT INTO posts(datetime, title, category, author, image,post)";
-    $sql .= "VALUES(:dateTime, :postTitle, :categoryName, :adminName, :imageName, :postDescription)";
+    $sql = "UPDATE posts SET 
+      title    ='$PostTitle', 
+      category = '$Category', 
+      image    = '$Image', 
+      post     = '$PostText' 
+      WHERE id = '$Parameter' ";
 
-    $stmt = $connectingDB->prepare($sql);
-    $stmt->bindValue(':dateTime', $DateTime);
-    $stmt->bindValue(':postTitle', $PostTitle);
-    $stmt->bindValue(':categoryName', $Category);
-    $stmt->bindValue(':adminName', $Admin);
-    $stmt->bindValue(':imageName', $Image);
-    $stmt->bindValue(':postDescription', $PostText);
-    $Execute = $stmt->execute();
+    $Execute = $connectingDB->query($sql);
+
     move_uploaded_file($_FILES["Image"]["tmp_name"], $Target);
 
     if ($Execute) {
-      $_SESSION["SuccessMessage"] = "Post with id : " . $connectingDB->lastInsertId() . " Added Successfully";
-      Redirect_to("AddNewPost.php");
+      $_SESSION["SuccessMessage"] = "Post with id : " . $connectingDB->lastInsertId() . " Post   updated Successfully";
+      Redirect_to("Posts.php");
     } else {
       $_SESSION["ErrorMessage"] = "Something went wrong, please try again!";
-      Redirect_to("AddNewPost.php");
+      Redirect_to("Posts.php");
     }
   }
 }
@@ -148,7 +149,7 @@ if (isset($_POST["Submit"])) {
         echo SuccessMessage();
 
         global $connectingDB;
-        $Parameter = $_GET["id"];
+
         $sql = "SELECT * FROM posts WHERE id='$Parameter'";
         $stmt = $connectingDB->query($sql);
         while ($DataRows = $stmt->fetch()) {
@@ -160,7 +161,7 @@ if (isset($_POST["Submit"])) {
         }
         ?>
 
-        <form action="AddNewPost.php" method="post" enctype="multipart/form-data">
+        <form action="EditPost.php?id=<?php echo $Parameter; ?>" method="post" enctype="multipart/form-data">
           <div class="card mb-3">
             <div class="card-body bg-dark">
 
@@ -221,7 +222,7 @@ if (isset($_POST["Submit"])) {
 
               <div class="form-group">
                 <label for="Post"><span class="text-light">Post :</span></label>
-                <textarea class="form-control" id="Post" name="PostDescription">
+                <textarea class="form-control m-0 p-0" id="Post" name="PostDescription">
                 <?php echo $PostToBeUpdated; ?>
                 </textarea>
               </div>
