@@ -2,10 +2,20 @@
 <?php require_once("Includes/Functions.php"); ?>
 <?php require_once("Includes/Sessions.php"); ?>
 
-<?php ?>
-
 <?php
 $Parameter = $_GET["id"];
+
+global $connectingDB;
+
+$sql = "SELECT * FROM posts WHERE id='$Parameter'";
+$stmt = $connectingDB->query($sql);
+while ($DataRows = $stmt->fetch()) {
+
+  $TitleToBeDeleted     = $DataRows['title'];
+  $CategoryToBeDeleted  = $DataRows['category'];
+  $ImageToBeDeleted     = $DataRows['image'];
+  $PostToBeDeleted      = $DataRows['post'];
+}
 
 // submit button if-condition
 if (isset($_POST["Submit"])) {
@@ -17,6 +27,8 @@ if (isset($_POST["Submit"])) {
   $Execute = $connectingDB->query($sql);
 
   if ($Execute) {
+    $Target_Path_To_DELETE_Image = "Uploads/$ImageToBeDeleted";
+    unlink($Target_Path_To_DELETE_Image);
     $_SESSION["SuccessMessage"] = "Post Deleted Successfully";
     Redirect_to("Posts.php");
   } else {
@@ -24,7 +36,6 @@ if (isset($_POST["Submit"])) {
     Redirect_to("Posts.php");
   }
 } // ending Submit button if-condition
-
 ?>
 
 <!DOCTYPE html>
@@ -34,11 +45,8 @@ if (isset($_POST["Submit"])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
   <!-- bootstrap -->
   <link rel="stylesheet" href="css/bootstrap.css">
-
-
 
   <!--  custom styles -->
   <link rel="stylesheet" href="css/style.css">
@@ -116,21 +124,8 @@ if (isset($_POST["Submit"])) {
 
         <!-- displays messages  -->
         <?php
-
         echo ErrorMessage();
         echo SuccessMessage();
-
-        global $connectingDB;
-
-        $sql = "SELECT * FROM posts WHERE id='$Parameter'";
-        $stmt = $connectingDB->query($sql);
-        while ($DataRows = $stmt->fetch()) {
-
-          $TitleToBeUpdated = $DataRows['title'];
-          $CategoryToBeUpdated = $DataRows['category'];
-          $ImageToBeUpdated = $DataRows['image'];
-          $PostToBeUpdated = $DataRows['post'];
-        }
         ?>
 
         <form action="DeletePost.php?id=<?php echo $Parameter; ?>" method="post" enctype="multipart/form-data">
@@ -139,14 +134,14 @@ if (isset($_POST["Submit"])) {
 
               <div class="form-group">
                 <label class="text-light" for="title"> Post Title</label>
-                <input disabled class="form-control" type="text" name="PostTitle" id="title" value="<?php echo $TitleToBeUpdated; ?>">
+                <input disabled class="form-control" type="text" name="PostTitle" id="title" value="<?php echo $TitleToBeDeleted; ?>">
               </div>
 
               <div class="form-group">
                 <label class="text-light" for="imageSelect">
                   <p class="FieldInfo">
                     Image:
-                    <img class="img-thumbnail" src="Uploads/<?php echo $ImageToBeUpdated; ?>" alt="post image" width="250" height="auto" class="img-thumbnail">
+                    <img class="img-thumbnail" src="Uploads/<?php echo $ImageToBeDeleted; ?>" alt="post image" width="250" height="auto" class="img-thumbnail">
                   </p>
                 </label><!-- /label  -->
               </div><!-- /form-group  -->
@@ -155,7 +150,7 @@ if (isset($_POST["Submit"])) {
               <div class="form-group">
                 <label for="Post"><span class="text-light">Post :</span></label>
                 <textarea disabled class="form-control m-0 p-0" id="Post" name="PostDescription">
-                <?php echo $PostToBeUpdated; ?>
+                <?php echo $PostToBeDeleted; ?>
                 </textarea>
               </div><!-- /form-group  -->
 
