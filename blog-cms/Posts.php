@@ -113,6 +113,13 @@
   <section class="container mb-5">
     <div class="row">
       <div class="col-sm-8 col-md-8 col-lg-12">
+
+        <!-- alert messages  -->
+        <?php
+        echo ErrorMessage();
+        echo SuccessMessage();
+        ?>
+
         <table class="table table-striped table-hover">
           <thead class="thead-dark">
             <tr>

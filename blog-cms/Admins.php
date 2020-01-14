@@ -18,11 +18,14 @@ if (isset($_POST["Submit"])) {
   if (empty($UserName) || empty($Password) || empty($ConfirmPassword)) {
     $_SESSION["ErrorMessage"] = "All fields must be filled out";
     Redirect_to("Admins.php");
-  } elseif (strlen($Password) < 4) {
+  } else if (strlen($Password) < 4) {
     $_SESSION["ErrorMessage"] = "Password should be greater than 4 charecters";
     Redirect_to("Admins.php");
   } else if ($Password !== $ConfirmPassword) {
     $_SESSION["ErrorMessage"] = "Password and confirm password do not match";
+    Redirect_to("Admins.php");
+  } else if (CheckUserNameExist($UserName)) {
+    $_SESSION["ErrorMessage"] = "Username exists, try another one!";
     Redirect_to("Admins.php");
   } else {
 
@@ -39,8 +42,8 @@ if (isset($_POST["Submit"])) {
     $stmt->bindValue(':dateTime', $DateTime);
     $stmt->bindValue(':userName', $UserName);
     $stmt->bindValue(':password', $Password);
-    $stmt->bindValue(':aName', $Name);
-    $stmt->bindValue(':adminName', $Admin);
+    $stmt->bindValue(':aName',    $Name);
+    $stmt->bindValue(':adminName',  $Admin);
 
     $Execute = $stmt->execute();
 

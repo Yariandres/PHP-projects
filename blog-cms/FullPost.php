@@ -190,8 +190,12 @@ if (isset($_POST["Submit"])) {
 
         <!-- fetching comments from DB  -->
         <?php
+        // get all post that have been approved by admin 
         global $connectingDB;
-        $sql = "SELECT * FROM comments WHERE post_id='$SearchQueryPerameter'";
+        $sql = "SELECT * FROM comments
+         WHERE post_id='$SearchQueryPerameter'
+         AND status='ON'";
+
         $stmt = $connectingDB->query($sql);
 
         while ($DataRows = $stmt->fetch()) {
@@ -217,20 +221,18 @@ if (isset($_POST["Submit"])) {
               </p>
             </div>
           </div>
+          <hr>
         <?php } ?>
         <!-- end-of comments while loop -->
-
-
         <!-- /COMMENT-->
 
+
         <!-- COMMNET FORM  -->
-        <hr>
         <!-- form ALERT MESSAGES -->
         <?php
         echo ErrorMessage();
         echo SuccessMessage();
         ?>
-
         <form action="FullPost.php?id=<?php echo $SearchQueryPerameter; ?>" method="post">
           <h5 class="font-italic">Share your thoughs about this post?</h5>
           <div class="form-group">
@@ -260,10 +262,7 @@ if (isset($_POST["Submit"])) {
         <p class="display-4">SIDE BAR</p>
       </div><!-- /col  -->
       <!-- /SIDEBAR  -->
-
     </div> <!-- /row  -->
-
-
   </div><!-- /container  -->
   <!-- /MAIN  -->
 

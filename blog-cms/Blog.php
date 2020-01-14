@@ -72,8 +72,8 @@
       <h1 class="display-4">Baby Wearing Blog</h1>
     </div>
   </div> -->
-  <!-- displays messages  -->
 
+  <!-- displays alert messages -->
   <?php
   echo ErrorMessage();
   echo SuccessMessage();
@@ -111,17 +111,17 @@
           $Admin           = $DataRows["author"];
           $Image           = $DataRows["image"];
           $PostDescription = $DataRows["post"];
-
         ?>
 
           <div class="card">
             <div class="card-body">
-
-              <img class="card-img-top img-fluid" src="Uploads/<?php echo htmlentities($Image); ?>" alt="Post image">
-
               <h4 class="card-title mt-3">
                 <?php echo htmlentities($PostTitle); ?>
               </h4>
+
+              <img class="card-img-top img-thumbnail" src="Uploads/<?php echo htmlentities($Image); ?>" alt="Post image" height="100">
+
+
 
               <small class="text-muted">Written by: <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
 

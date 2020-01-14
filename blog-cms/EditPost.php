@@ -57,7 +57,7 @@ if (isset($_POST["Submit"])) {
     move_uploaded_file($_FILES["Image"]["tmp_name"], $Target);
 
     if ($Execute) {
-      $_SESSION["SuccessMessage"] = "Post with id : " . $connectingDB->lastInsertId() . " Post   updated Successfully";
+      $_SESSION["SuccessMessage"] = "Post with id : " . $connectingDB->lastInsertId() . " Post updated Successfully";
       Redirect_to("Posts.php");
     } else {
       $_SESSION["ErrorMessage"] = "Something went wrong, please try again!";
