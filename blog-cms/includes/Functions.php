@@ -27,3 +27,22 @@ function CheckUserNameExist($UserName)
     return false;
   }
 }
+
+
+function Login_Attempt($UserName, $Password)
+{
+  global $connectingDB;
+  $sql = "SELECT * FROM admins WHERE username=:userName AND password=:passWord LIMIT 1";
+  $stmt = $connectingDB->prepare($sql);
+  $stmt->bindValue(':userName', $UserName);
+  $stmt->bindValue(':passWord', $Password);
+  $stmt->execute();
+
+  $Result = $stmt->rowcount();
+
+  if ($Result == 1) {
+    return $Found_Account = $stmt->fetch();
+  } else {
+    return null;
+  }
+}
