@@ -172,27 +172,67 @@ if (isset($_POST["Submit"])) {
                 <?php echo htmlentities($PostTitle); ?>
               </h4>
 
-              <small class="text-muted">Written by: <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
+              <small class="blockquote-footer">Written by: <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
 
               <span class="badge badge-light float-right">Comments 20</span>
               <hr>
               <?php
               echo '<p class\'lead\'>' . htmlentities($PostDescription) . '</p>';
               ?>
-
             </div><!-- /card-body  -->
           </div><!-- /card  -->
         <?php } ?>
 
+        <h3 class="pb-4 my-5 font-italic border-bottom">
+          Comments:
+        </h3>
+        <!-- COMMENT-->
+
+        <!-- fetching comments from DB  -->
+        <?php
+        global $connectingDB;
+        $sql = "SELECT * FROM comments WHERE post_id='$SearchQueryPerameter'";
+        $stmt = $connectingDB->query($sql);
+
+        while ($DataRows = $stmt->fetch()) {
+          $CommentDate = $DataRows['datetime'];
+          $CommenterName = $DataRows['name'];
+          $CommentContent = $DataRows['comment'];
+        ?>
+
+          <!-- dispalys the whole post -->
+          <div class="media">
+            <div class="media-body">
+              <!-- dispalys name -->
+              <h6 class="lead mt-0"><?php echo $CommenterName; ?></h6>
+
+              <!-- displays date -->
+              <small class="blockquote-footer">
+                <?php echo $CommentDate; ?>
+              </small>
+
+              <!-- displays comment  -->
+              <p class="lead">
+                <?php echo $CommentContent; ?>
+              </p>
+            </div>
+          </div>
+        <?php } ?>
+        <!-- end-of comments while loop -->
+
+
+        <!-- /COMMENT-->
+
+        <!-- COMMNET FORM  -->
         <hr>
         <!-- form ALERT MESSAGES -->
         <?php
         echo ErrorMessage();
         echo SuccessMessage();
         ?>
-        <!-- comment area  -->
+
         <form action="FullPost.php?id=<?php echo $SearchQueryPerameter; ?>" method="post">
-          <h5>Share your thoughs about this post?</h5>
+          <h5 class="font-italic">Share your thoughs about this post?</h5>
           <div class="form-group">
             <label for="name">Name</label>
             <input type="text" name="CommenterName" class="form-control" id="name">
@@ -206,23 +246,20 @@ if (isset($_POST["Submit"])) {
           <div class="form-group">
             <label for="textarea">Comment</label>
             <textarea name="CommenterThoughts" class="form-control" id="textarea" rows="3">
-
             </textarea>
           </div><!-- /form-group -->
 
           <button type="submit" name="Submit" class="btn btn-primary">Submit</button>
-
         </form><!-- /form  -->
-
-
-
-        <!-- /comment area  -->
-
       </div><!-- /col -->
+      <!-- /COMMNET FORM  -->
 
+
+      <!-- SIDEBAR  -->
       <div class="col-sm-4">
         <p class="display-4">SIDE BAR</p>
       </div><!-- /col  -->
+      <!-- /SIDEBAR  -->
 
     </div> <!-- /row  -->
 
