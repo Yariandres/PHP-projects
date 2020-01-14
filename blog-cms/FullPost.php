@@ -22,14 +22,17 @@ if (isset($_POST["Submit"])) {
 
     // query to insert comment in the DB when everything is fine
 
-    $sql  = "INSERT INTO comments(datetime, name, email, comment)";
-    $sql .= "VALUES(:dateTime, :name, :email, :comment)";
+    $sql  = "INSERT INTO comments(datetime, name, email, comment, approvedby, status, post_id)";
+
+    $sql .= "VALUES(:dateTime, :name, :email, :comment, 'pending', 'OFF', :postIdFromURL)";
+
     $stmt = $connectingDB->prepare($sql);
     // binding comment values
     $stmt->bindValue(':dateTime', $DateTime);
     $stmt->bindValue(':name', $Name);
     $stmt->bindValue(':email', $Email);
     $stmt->bindValue(':comment', $Comment);
+    $stmt->bindValue(':postIdFromURL', $SearchQueryPerameter);
 
     $Execute = $stmt->execute();
 
@@ -42,7 +45,6 @@ if (isset($_POST["Submit"])) {
     }
   }
 }
-
 ?>
 
 <!DOCTYPE html>
