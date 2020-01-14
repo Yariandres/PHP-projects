@@ -5,38 +5,51 @@
 <?php
 
 if (isset($_POST["Submit"])) {
-  $Category = $_POST["CategoryTitle"];
+  $UserName         = $_POST["UserName"];
+  $Name             = $_POST["Name"];
+  $Password         = $_POST["Password"];
+  $ConfirmPassword  = $_POST["ConfirmPassword"];
+
   $Admin = "Yari";
 
   $CurrentTime = time();
   $DateTime = strftime("%d  %B - %Y - %H:%M:%S", $CurrentTime);
 
-  if (empty($Category)) {
+  if (empty($UserName) || empty($Password) || empty($ConfirmPassword)) {
     $_SESSION["ErrorMessage"] = "All fields must be filled out";
-    Redirect_to("Categories.php");
-  } elseif (strlen($Category) < 2) {
-    $_SESSION["ErrorMessage"] = "Category title should be greater than 2 charecters";
-    Redirect_to("Categories.php");
-  } elseif (strlen($Category) > 59) {
-    $_SESSION["ErrorMessage"] = "Category title should be less than 50 charecters";
-    Redirect_to("Categories.php");
+    Redirect_to("Admins.php");
+  } elseif (strlen($Password) < 4) {
+    $_SESSION["ErrorMessage"] = "Password should be greater than 4 charecters";
+    Redirect_to("Admins.php");
+  } else if ($Password !== $ConfirmPassword) {
+    $_SESSION["ErrorMessage"] = "Password and confirm password do not match";
+    Redirect_to("Admins.php");
   } else {
-    // query to insert category in the DB when everything is fine
-    $sql = "INSERT INTO category(title, author, datetime)";
-    $sql .= "VALUES(:categoryName, :adminName, :dateTime)";
+
+    // query to insert new admin to the DB when everything is fine
+    $sql = "INSERT INTO admins(datetime, username, password, aname, addedby)";
+
+    // defining name paramiters
+    $sql .= "VALUES(:dateTime, :userName, :password, :aName, :adminName)";
+
+    // binding the values
     $stmt = $connectingDB->prepare($sql);
-    $stmt->bindValue(':categoryName', $Category);
-    $stmt->bindValue('adminName', $Admin);
-    $stmt->bindValue('dateTime', $DateTime);
+
+    // binding the values
+    $stmt->bindValue(':dateTime', $DateTime);
+    $stmt->bindValue(':userName', $UserName);
+    $stmt->bindValue(':password', $Password);
+    $stmt->bindValue(':aName', $Name);
+    $stmt->bindValue(':adminName', $Admin);
 
     $Execute = $stmt->execute();
 
     if ($Execute) {
-      $_SESSION["SuccessMessage"] = "Category with id : " . $connectingDB->lastInsertId() . " Added Successfully";
-      Redirect_to("Categories.php");
+      $_SESSION["SuccessMessage"] = "New Admin added " . $Name . " Successfully";
+      Redirect_to("Admins.php");
     } else {
       $_SESSION["ErrorMessage"] = "Something went wrong, please try again!";
-      Redirect_to("Categories.php");
+      Redirect_to("Admins.php");
     }
   }
 }
