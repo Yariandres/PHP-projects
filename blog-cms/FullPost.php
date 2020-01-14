@@ -3,6 +3,47 @@
 <?php require_once("Includes/Sessions.php"); ?>
 <?php $SearchQueryPerameter = $_GET["id"]; ?>
 
+<?php
+
+if (isset($_POST["Submit"])) {
+  $Name     = $_POST["CommenterName"];
+  $Email    = $_POST["CommenterEmail"];
+  $Comment  = $_POST["CommenterThoughts"];
+  $CurrentTime = time();
+  $DateTime = strftime("%d  %B - %Y - %H:%M:%S", $CurrentTime);
+
+  if (empty($Name) || empty($Email) || empty($Comment)) {
+    $_SESSION["ErrorMessage"] = "All fields must be filled out";
+    Redirect_to("FullPost.php?id={$SearchQueryPerameter}");
+  } elseif (strlen($Comment) > 500) {
+    $_SESSION["ErrorMessage"] = "Comment length should be less than 500 charecters";
+    Redirect_to("FullPost.php?id={$SearchQueryPerameter}");
+  } else {
+
+    // query to insert comment in the DB when everything is fine
+
+    $sql  = "INSERT INTO comments(datetime, name, email, comment)";
+    $sql .= "VALUES(:dateTime, :name, :email, :comment)";
+    $stmt = $connectingDB->prepare($sql);
+    // binding comment values
+    $stmt->bindValue(':dateTime', $DateTime);
+    $stmt->bindValue(':name', $Name);
+    $stmt->bindValue(':email', $Email);
+    $stmt->bindValue(':comment', $Comment);
+
+    $Execute = $stmt->execute();
+
+    if ($Execute) {
+      $_SESSION["SuccessMessage"] = "Comment Submited Successfully";
+      Redirect_to("FullPost.php?id={$SearchQueryPerameter}");
+    } else {
+      $_SESSION["ErrorMessage"] = "Something went wrong, please try again!";
+      Redirect_to("FullPost.php?id={$SearchQueryPerameter}");
+    }
+  }
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,6 +116,8 @@
     </div>
   </div> -->
 
+
+
   <!-- MAIN  -->
   <div class="container mb-5">
     <div class="row">
@@ -140,22 +183,27 @@
         <?php } ?>
 
         <hr>
+        <!-- form ALERT MESSAGES -->
+        <?php
+        echo ErrorMessage();
+        echo SuccessMessage();
+        ?>
         <!-- comment area  -->
         <form action="FullPost.php?id=<?php echo $SearchQueryPerameter; ?>" method="post">
           <h5>Share your thoughs about this post?</h5>
           <div class="form-group">
-            <label for="exampleInputEmail1">Name</label>
-            <input type="text" name="commenterName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label for="name">Name</label>
+            <input type="text" name="CommenterName" class="form-control" id="name">
           </div><!-- /form-group -->
 
           <div class="form-group">
-            <label for="exampleInputEmail1">Email</label>
-            <input type="email" name="commenterEmail" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+            <label for="email">Email</label>
+            <input type="email" name="CommenterEmail" class="form-control" id="email">
           </div><!-- /form-group -->
 
           <div class="form-group">
-            <label for="exampleFormControlTextarea1">Comment</label>
-            <textarea name="commenterThoughts" class="form-control" id="exampleFormControlTextarea1" rows="3">
+            <label for="textarea">Comment</label>
+            <textarea name="CommenterThoughts" class="form-control" id="textarea" rows="3">
 
             </textarea>
           </div><!-- /form-group -->
