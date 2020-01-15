@@ -11,7 +11,7 @@ if (isset($_POST["Submit"])) {
   // saves image to Upload/folder
   $Target = "Uploads/" . basename($_FILES["Image"]["name"]);
   $PostText = $_POST["PostDescription"];
-  $Admin = "Yari";
+  $Admin = $_SESSION["UserName"];
   $CurrentTime = time();
   $DateTime = strftime("%d  %B - %Y - %H:%M:%S", $CurrentTime);
 
@@ -65,8 +65,6 @@ if (isset($_POST["Submit"])) {
   <!-- bootstrap -->
   <link rel="stylesheet" href="css/bootstrap.css">
 
-
-
   <!--  custom styles -->
   <link rel="stylesheet" href="css/style.css">
 
@@ -90,27 +88,27 @@ if (isset($_POST["Submit"])) {
           </li>
 
           <li class="nav-item">
-            <a href="dashboard.php" class="nav-link">Dashboard</a>
+            <a href="Dashboard.php" class="nav-link">Dashboard</a>
           </li>
 
           <li class="nav-item">
-            <a href="posts.php" class="nav-link">Posts</a>
+            <a href="Posts.php" class="nav-link">Posts</a>
           </li>
 
           <li class="nav-item">
-            <a href="categories.php" class="nav-link">Categories</a>
+            <a href="Categories.php" class="nav-link">Categories</a>
           </li>
 
           <li class="nav-item">
-            <a href="admin.php" class="nav-link">Manage Admins</a>
+            <a href="Admins.php" class="nav-link">Manage Admins</a>
           </li>
 
           <li class="nav-item">
-            <a href="comments.php" class="nav-link">Comments</a>
+            <a href="Comments.php" class="nav-link">Comments</a>
           </li>
 
           <li class="nav-item">
-            <a href="blog.php?page=1" class="nav-link">Live Blog</a>
+            <a href="Blog.php?page=1" class="nav-link">Live Blog</a>
           </li>
         </ul><!-- /ul  -->
 
@@ -146,7 +144,6 @@ if (isset($_POST["Submit"])) {
 
         echo ErrorMessage();
         echo SuccessMessage();
-
         ?>
 
         <form action="AddNewPost.php" method="post" enctype="multipart/form-data">

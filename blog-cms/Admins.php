@@ -10,7 +10,7 @@ if (isset($_POST["Submit"])) {
   $Password         = $_POST["Password"];
   $ConfirmPassword  = $_POST["ConfirmPassword"];
 
-  $Admin = "Yari";
+  $Admin            = $_SESSION["UserName"];
 
   $CurrentTime = time();
   $DateTime = strftime("%d  %B - %Y - %H:%M:%S", $CurrentTime);

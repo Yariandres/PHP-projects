@@ -6,7 +6,7 @@
 
 if (isset($_POST["Submit"])) {
   $Category = $_POST["CategoryTitle"];
-  $Admin = "Yari";
+  $Admin = $_SESSION["UserName"];
 
   $CurrentTime = time();
   $DateTime = strftime("%d  %B - %Y - %H:%M:%S", $CurrentTime);

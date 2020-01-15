@@ -2,10 +2,10 @@
 <?php require_once("Includes/Functions.php"); ?>
 <?php require_once("Includes/Sessions.php"); ?>
 
-<?php 
+<?php
 if (isset($_POST["Submit"])) {
- $UserName = $_POST["Username"];
- $Password = $_POST["Password"];
+  $UserName = $_POST["Username"];
+  $Password = $_POST["Password"];
 
   $Found_Account = Login_Attempt($UserName, $Password);
 
@@ -14,19 +14,19 @@ if (isset($_POST["Submit"])) {
     $_SESSION["UserName"] = $Found_Account["username"];
     $_SESSION["AminName"] = $Found_Account["aname"];
 
-
     $_SESSION["SuccessMessage"] = "Wellcome Admin " . $_SESSION["AminName"];
-    Redirect_to("Login.php");
+    Redirect_to("Dashboard.php");
   } else {
     $_SESSION["ErrorMessage"] = "Incorrect Username Or Password";
     Redirect_to("Login.php");
   }
-} 
+}
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,7 +47,7 @@ if (isset($_POST["Submit"])) {
     <div class="container">
       <a href="#" class="navbar-brand">Baby Wearing Blog</a>
     </div><!-- /container  -->
-  </nav><!-- /nav  -->  
+  </nav><!-- /nav  -->
   <!-- /NAVBAR -->
 
   <!-- HEADER  -->
@@ -63,23 +63,23 @@ if (isset($_POST["Submit"])) {
   <!-- /header  -->
   <!-- /HEADER  -->
 
-  
+
 
   <!-- MAIN  -->
   <section class="container signin">
     <form action="Login.php" method="post" class="form-signin">
-      <!-- alert messages -->   
+      <!-- alert messages -->
       <?php
-        echo ErrorMessage();
-        echo SuccessMessage();
-      ?>    
+      echo ErrorMessage();
+      echo SuccessMessage();
+      ?>
       <input type="text" id="username" class="form-control" name="Username" placeholder="Email address">
 
       <input type="password" id="password" class="form-control" name="Password" placeholder="Password">
 
       <button type="submit" name="Submit" class="btn btn-lg btn-primary btn-block">Sign in</button>
-    </form><!-- /form  -->    
-  </section><!-- /section  -->  
+    </form><!-- /form  -->
+  </section><!-- /section  -->
   <!-- /MAIN -->
 
   <!-- FOOTER  -->
