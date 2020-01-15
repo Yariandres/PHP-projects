@@ -160,7 +160,6 @@ if (isset($_POST["Submit"])) {
 
         <form action="Admins.php" method="post">
           <div class="card mb-3">
-
             <div class="card-header">
               <h2 class="lead">Add new Admin</h2>
             </div>
@@ -200,10 +199,62 @@ if (isset($_POST["Submit"])) {
                 </div>
               </div>
 
-            </div>
-          </div>
-        </form>
+            </div><!-- /card-body  -->
+          </div><!-- /card  -->
+        </form><!-- /form  -->
 
+        <!-- TABLE -->
+        <h2 class="lead">Existing Admins</h2>
+        <table class="table table-striped table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+              <th>Date & Time</th>
+              <th>Name</th>
+              <th>Admin Name</th>
+              <th>Added by</th>
+              <th>Action</th>
+            </tr>
+          </thead><!-- /thead  -->
+
+          <?php
+          // connects to the DB
+          global $connectingDB;
+
+          // gets comments with the status OFF 
+          $sql = "SELECT * FROM admins ORDER BY id desc";
+          $Execute = $connectingDB->query($sql);
+
+          // to increment number of rows
+          $SrNo = 0;
+
+          while ($DataRows = $Execute->fetch()) {
+            $AdminId      = $DataRows["id"];
+            $DateTime     = $DataRows["datetime"];
+            $AdminUsename = $DataRows["username"];
+            $AdminName    = $DataRows["aname"];
+            $AddedBy      = $DataRows["addedby"];
+            $SrNo++;
+
+            // shortens the name of the commentor to fit the table cell
+            if (strlen($DateTime) > 10) {
+              $DateTime = substr($DateTime, 0, 10) . '...';
+            }
+
+          ?>
+            <tbody>
+              <tr>
+                <td><?php echo htmlentities($SrNo++); ?></td>
+                <td><?php echo htmlentities($DateTime); ?></td>
+                <td><?php echo htmlentities($AdminUsename); ?></td>
+                <td><?php echo htmlentities($AdminName); ?></td>
+                <td><?php echo htmlentities($AddedBy); ?></td>
+                <td><a class="btn btn-danger" href="DeleteAdmins.php?id=<?php echo $AdminId; ?>">Delete</a></td>
+              </tr>
+            </tbody><!-- /tbody  -->
+          <?php } ?>
+          <!-- end-while loop  -->
+        </table><!-- /table  -->
       </div>
     </div><!-- /row  -->
   </div><!-- /container  -->

@@ -61,7 +61,7 @@ Confirm_Login();
           </li>
 
           <li class="nav-item">
-            <a href="blog.php?page=1" class="nav-link">Live Blog</a>
+            <a href="blog.php?page=1" class="nav-link" target="_blank">Live Blog</a>
           </li>
         </ul><!-- /ul  -->
 
@@ -101,6 +101,7 @@ Confirm_Login();
         echo SuccessMessage();
         ?>
 
+        <!-- APPROVED TABLE -->
         <table class="table table-striped table-hover">
           <thead class="thead-dark">
             <tr>
@@ -151,15 +152,72 @@ Confirm_Login();
                 <td><?php echo htmlentities($CommentContent); ?></td>
                 <td><a class="btn btn-success" href="ApproveComments.php?id=<?php echo $CommentId; ?>">Approve</a></td>
                 <td><a class="btn btn-danger" href="DeleteComments.php?id=<?php echo $CommentId; ?>">Delete</a></td>
-                <td><a class="btn btn-primary" href="FullPost.php?id=<?php echo $CommentPostId; ?>" target="_blank">Live Preview</a></td>
+                <td style="min-width: 140px" style="min-width: 140px"><a class="btn btn-primary" href="FullPost.php?id=<?php echo $CommentPostId; ?>" target="_blank">Live Preview</a></td>
               </tr>
 
             </tbody><!-- /tbody  -->
-
           <?php } ?>
           <!-- end-while loop  -->
+        </table><!-- /table  -->
 
+        <!-- DIS-APPROVED TABLE -->
+        <h2 class="lead">Approved Comments</h2>
+        <table class="table table-striped table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+              <th>Date & Time</th>
+              <th>Author</th>
+              <th>Comment</th>
+              <th>Revert</th>
+              <th>Action</th>
+              <th>Details</th>
+            </tr>
+          </thead><!-- /thead  -->
 
+          <?php
+          // connects to the DB
+          global $connectingDB;
+
+          // gets comments with the status OFF 
+          $sql = "SELECT * FROM comments WHERE status='ON' ORDER BY id desc";
+          $Execute = $connectingDB->query($sql);
+
+          $SrNo = 0;
+
+          while ($DataRows = $Execute->fetch()) {
+            $CommentId = $DataRows["id"];
+            $DateTimeOfComment = $DataRows["datetime"];
+            $CommenterName = $DataRows["name"];
+            $CommentContent = $DataRows["comment"];
+            $CommentPostId = $DataRows["post_id"];
+            $SrNo++;
+
+            // shortens the name of the commentor to fit the table cell
+            if (strlen($CommenterName) > 10) {
+              $CommenterName = substr($CommenterName, 0, 10) . '...';
+            }
+            // shortens the datetime to fit the table cell
+            if (strlen($DateTimeOfComment) > 11) {
+              $DateTimeOfComment = substr($DateTimeOfComment, 0, 11) . '...';
+            }
+
+          ?>
+
+            <tbody>
+              <tr>
+                <td><?php echo htmlentities($SrNo++); ?></td>
+                <td><?php echo htmlentities($DateTimeOfComment); ?></td>
+                <td><?php echo htmlentities($CommenterName); ?></td>
+                <td><?php echo htmlentities($CommentContent); ?></td>
+                <td style="min-width: 140px" style="min-width: 140px"><a class="btn btn-warning" href="DisApproveComments.php?id=<?php echo $CommentId; ?>">Dis-Approve</a></td>
+                <td><a class="btn btn-danger" href="DeleteComments.php?id=<?php echo $CommentId; ?>">Delete</a></td>
+                <td style="min-width: 140px" style="min-width: 140px"><a class="btn btn-primary" href="FullPost.php?id=<?php echo $CommentPostId; ?>" target="_blank">Live Preview</a></td>
+              </tr>
+
+            </tbody><!-- /tbody  -->
+          <?php } ?>
+          <!-- end-while loop  -->
         </table><!-- /table  -->
       </div><!-- /col  -->
     </div><!-- /row -->

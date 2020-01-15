@@ -137,10 +137,8 @@ if (isset($_POST["Submit"])) {
 
         <!-- displays messages  -->
         <?php
-
         echo ErrorMessage();
         echo SuccessMessage();
-
         ?>
 
         <form action="Categories.php" method="post">
@@ -172,10 +170,59 @@ if (isset($_POST["Submit"])) {
           </div>
         </form>
 
+        <h2 class="lead">Existing Categories</h2>
+        <table class="table table-striped table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+              <th>Date & Time</th>
+              <th>Name</th>
+              <th>Author</th>
+              <th>Action</th>
+            </tr>
+          </thead><!-- /thead  -->
+
+          <?php
+          // connects to the DB
+          global $connectingDB;
+
+          // gets comments with the status OFF 
+          $sql = "SELECT * FROM category ORDER BY id desc";
+          $Execute = $connectingDB->query($sql);
+
+          // to increment number of rows
+          $SrNo = 0;
+
+          while ($DataRows = $Execute->fetch()) {
+            $CategoryId   = $DataRows["id"];
+            $CategoryDate = $DataRows["datetime"];
+            $CategoryName = $DataRows["title"];
+            $CreatorName  = $DataRows["author"];
+            $SrNo++;
+
+            // shortens the name of the commentor to fit the table cell
+            if (strlen($CategoryDate) > 10) {
+              $CategoryDate = substr($CategoryDate, 0, 10) . '...';
+            }
+
+          ?>
+            <tbody>
+              <tr>
+                <td><?php echo htmlentities($SrNo++); ?></td>
+                <td><?php echo htmlentities($CategoryDate); ?></td>
+                <td><?php echo htmlentities($CategoryName); ?></td>
+                <td><?php echo htmlentities($CreatorName); ?></td>
+                <td><a class="btn btn-danger" href="DeleteCategory.php?id=<?php echo $CategoryId; ?>">Delete</a></td>
+              </tr>
+
+            </tbody><!-- /tbody  -->
+          <?php } ?>
+          <!-- end-while loop  -->
+        </table><!-- /table  -->
+
       </div>
     </div><!-- /row  -->
   </div><!-- /container  -->
-
   <!-- /MAIN  -->
 
 
