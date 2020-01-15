@@ -28,7 +28,7 @@ function CheckUserNameExist($UserName)
   }
 }
 
-
+// check for duplicate record 
 function Login_Attempt($UserName, $Password)
 {
   global $connectingDB;
@@ -44,5 +44,16 @@ function Login_Attempt($UserName, $Password)
     return $Found_Account = $stmt->fetch();
   } else {
     return null;
+  }
+}
+
+// checks if user is logged in access granteed otherwise login is required 
+function Confirm_Login()
+{
+  if (isset($_SESSION["User_ID"])) {
+    return true;
+  } else {
+    $_SESSION["ErrorMessage"] = "Login Required";
+    Redirect_to("Login.php");
   }
 }
