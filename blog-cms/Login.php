@@ -3,6 +3,11 @@
 <?php require_once("Includes/Sessions.php"); ?>
 
 <?php
+if (isset($_SESSION["User_ID"])) {
+  Redirect_to("Dashboard.php");
+}
+
+
 if (isset($_POST["Submit"])) {
   $UserName = $_POST["Username"];
   $Password = $_POST["Password"];
@@ -12,9 +17,9 @@ if (isset($_POST["Submit"])) {
   if ($Found_Account) {
     $_SESSION["User_ID"] = $Found_Account["id"];
     $_SESSION["UserName"] = $Found_Account["username"];
-    $_SESSION["AminName"] = $Found_Account["aname"];
+    $_SESSION["AdminName"] = $Found_Account["aname"];
 
-    $_SESSION["SuccessMessage"] = "Wellcome Admin " . $_SESSION["AminName"];
+    $_SESSION["SuccessMessage"] = "Wellcome Admin " . $_SESSION["AdminName"];
 
     if (isset($_SESSION["TrackingURL"])) {
       Redirect_to($_SESSION["TrackingURL"]);
