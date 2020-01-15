@@ -2,7 +2,10 @@
 <?php require_once("Includes/Functions.php"); ?>
 <?php require_once("Includes/Sessions.php"); ?>
 <!-- checks if logged in or not  -->
-<?php Confirm_Login(); ?>
+<?php
+$_SESSION["TrackingURL"] = $_SERVER["PHP_SELF"];
+Confirm_Login();
+?>
 
 <?php
 

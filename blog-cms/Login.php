@@ -15,7 +15,12 @@ if (isset($_POST["Submit"])) {
     $_SESSION["AminName"] = $Found_Account["aname"];
 
     $_SESSION["SuccessMessage"] = "Wellcome Admin " . $_SESSION["AminName"];
-    Redirect_to("Dashboard.php");
+
+    if (isset($_SESSION["TrackingURL"])) {
+      Redirect_to($_SESSION["TrackingURL"]);
+    } else {
+      Redirect_to("Dashboard.php");
+    }
   } else {
     $_SESSION["ErrorMessage"] = "Incorrect Username Or Password";
     Redirect_to("Login.php");
