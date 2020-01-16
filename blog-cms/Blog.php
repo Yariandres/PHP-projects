@@ -145,7 +145,7 @@
               <small class="text-muted">Category: <?php echo $Category ?> & </small>
               <small class="text-muted">Written by: <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
 
-              <span class="badge badge-light float-right">Comments <?php echo ApprovedComments($PostId); ?></span>
+              <span class="badge btn-outline-info float-right">Comments <?php echo ApprovedComments($PostId); ?></span>
 
               <hr>
 
@@ -157,13 +157,53 @@
               ?>
 
               <a href="FullPost.php?id=<?php echo $PostId; ?>" class="float-right">
-                <span class="btn btn-outline-light text-dark">Read More</span>
+                <span class="btn btn-outline-info text-dark">Read More</span>
               </a>
 
             </div><!-- /card-body  -->
           </div><!-- /card  -->
         <?php } ?>
 
+        <hr>
+        <!-- PAGINATION  -->
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
+            <?php
+            // connects to the DB
+            global $connectingDB;
+
+            //counts posts
+            $sql = "SELECT COUNT(*) FROM posts";
+
+            // use DB connection and call the method of query
+            $stmt = $connectingDB->query($sql);
+
+            $RowPagination = $stmt->fetch();
+
+            // Array to string conversion
+            $TotalPosts = array_shift($RowPagination);
+
+            // devides total amount of posts by 4 
+            $PostPagination = $TotalPosts / 4;
+
+            // ceil function to round the number and show 4 post per page
+            $PostPagination = ceil($PostPagination);
+
+
+            // itarate through post pagination 
+            for ($i = 1; $i <= $PostPagination; $i++) {
+
+            ?>
+              <li class="page-item">
+                <a class="page-link" href="Blog.php?page=<?php echo $i; ?>">
+                  <?php echo $i; ?>
+                </a>
+              </li>
+
+            <?php } ?>
+          </ul>
+        </nav>
       </div><!-- /col -->
 
       <div class="col-sm-4">
@@ -187,7 +227,6 @@
         </div><!-- /col  -->
       </div><!-- /row  -->
     </div><!-- /container  -->
-
   </footer>
   <!-- /FOOTER  -->
 
