@@ -172,9 +172,10 @@ if (isset($_POST["Submit"])) {
                 <?php echo htmlentities($PostTitle); ?>
               </h4>
 
-              <small class="blockquote-footer">Written by: <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
+              <small class="text-muted">Category: <?php echo $Category ?> & </small>
+              <small class="text-muted">Written by: <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
 
-              <span class="badge badge-light float-right">Comments 20</span>
+              <span class="badge badge-light float-right">Comments <?php echo ApprovedComments($PostId); ?></span>
               <hr>
               <?php
               echo '<p class\'lead\'>' . htmlentities($PostDescription) . '</p>';

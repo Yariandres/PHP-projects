@@ -121,11 +121,10 @@
 
               <img class="card-img-top img-thumbnail" src="Uploads/<?php echo htmlentities($Image); ?>" alt="Post image" height="100">
 
-
-
+              <small class="text-muted">Category: <?php echo $Category ?> & </small>
               <small class="text-muted">Written by: <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
 
-              <span class="badge badge-light float-right">Comments 20</span>
+              <span class="badge badge-light float-right">Comments <?php echo ApprovedComments($PostId); ?></span>
 
               <hr>
 
@@ -145,7 +144,6 @@
         <?php } ?>
 
       </div><!-- /col -->
-
 
       <div class="col-sm-4">
         <p class="display-4">Hello world</p>
