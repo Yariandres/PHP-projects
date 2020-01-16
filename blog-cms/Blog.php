@@ -92,11 +92,32 @@
           $Search = $_GET["Search"];
 
           // matching search query 
-          $sql = "SELECT * FROM posts WHERE datetime LIKE :search OR title LIKE :search OR category LIKE :search OR post LIKE :search";
+          $sql = "SELECT * FROM posts 
+          WHERE datetime LIKE :search 
+          OR title LIKE :search 
+          OR category 
+          LIKE :search 
+          OR post 
+          LIKE :search";
 
           $stmt = $connectingDB->prepare($sql);
           $stmt->bindValue(':search', '%' . $Search . '%');
           $stmt->execute();
+        } elseif (isset($_GET["page"])) { // Pagination is Active
+          $Page = $_GET["page"];
+
+          // if page is equal to zero or one, show index page 1
+          if ($Page == 0 || $Page < 1) {
+            $ShowPostFrom = 0;
+          } else {
+            $ShowPostFrom = ($Page * 4) - 4;
+          }
+
+          // get from the DB
+          $sql = "SELECT * FROM posts ORDER BY id desc LIMIT $ShowPostFrom,4";
+
+
+          $stmt = $connectingDB->query($sql);
         } else {
           $sql = "SELECT * FROM posts ORDER BY id desc";
           $stmt = $connectingDB->query($sql);
