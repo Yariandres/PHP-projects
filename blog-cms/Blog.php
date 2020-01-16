@@ -119,7 +119,7 @@
 
           $stmt = $connectingDB->query($sql);
         } else {
-          $sql = "SELECT * FROM posts ORDER BY id desc";
+          $sql = "SELECT * FROM posts ORDER BY id desc LIMIT 0,4";
           $stmt = $connectingDB->query($sql);
         }
 
@@ -165,9 +165,22 @@
         <?php } ?>
 
         <hr>
+
         <!-- PAGINATION  -->
         <nav aria-label="Page navigation">
+
           <ul class="pagination">
+
+            <!-- creating backward button  -->
+            <?php
+            if (isset($Page)) {
+              if ($Page > 1) { ?>
+                <li class="page-item">
+                  <a class="page-link" href="Blog.php?page=<?php echo $Page + 1; ?>">&laquo;</a>
+                </li>
+            <?php }
+            } ?>
+
             <!-- <li class="page-item"><a class="page-link" href="#">Previous</a></li> -->
             <?php
             // connects to the DB
@@ -193,22 +206,88 @@
 
             // itarate through post pagination 
             for ($i = 1; $i <= $PostPagination; $i++) {
-
+              if (isset($Page)) {
+                if ($i == $Page) {
+                  echo '<li class="page-item active"><a class="page-link" href="Blog.php?page=' . $i . '">' . $i . '</a></li>';
+                } else {
+                  echo '<li class="page-item"><a class="page-link" href="Blog.php?page=' . $i . '">' . $i . '</a></li>';
+                }
+              }
+            } //end of forloop
             ?>
-              <li class="page-item">
-                <a class="page-link" href="Blog.php?page=<?php echo $i; ?>">
-                  <?php echo $i; ?>
-                </a>
-              </li>
 
-            <?php } ?>
+            <!-- creating forward button  -->
+            <?php
+            // if page is set and no page number given 
+            if (isset($Page) && !empty($Page)) {
+              if ($Page + 1 <= $PostPagination) { ?>
+                <li class="page-item">
+                  <a class="page-link" href="Blog.php?page=<?php echo $Page + 1; ?>">&raquo;</a>
+                </li>
+            <?php }
+            } ?>
           </ul>
         </nav>
       </div><!-- /col -->
 
-      <div class="col-sm-4">
-        <p class="display-4">Hello world</p>
-      </div><!-- /col  -->
+      <aside class="col-md-4 blog-sidebar">
+        <div class="p-4 mb-3 bg-light rounded">
+          <h4 class="font-italic">About</h4>
+          <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+        </div>
+
+        <!-- subscribe form -->
+        <div class="p-4">
+          <h4>Subscribe</h4>
+          <form method="POST">
+            <div class="form-group">
+              <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name...">
+            </div>
+
+            <div class="form-group">
+              <input type="email" name="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Email...">
+            </div>
+            <button type="submit" name="subscribe" class="btn btn-outline-primary">Subscribe</button>
+            <small id="emailHelp" class="form-text text-muted mt-4">We'll never share your email with anyone else.</small>
+          </form>
+        </div><!-- /subscribe form -->
+        <hr>
+
+        <div class="p-4">
+          <h4 class="lead">Categories</h4>
+          <ol class="list-unstyled mb-0">
+
+            <?php
+            // connects to DB
+            global $connectingDB;
+
+            $sql = "SELECT * FROM category ORDER BY id desc";
+
+            $stmt = $connectingDB->query($sql);
+
+            while ($DataRows = $stmt->fetch()) {
+              $CategoryId = $DataRows["id"];
+              $CategoryName = $DataRows["title"];
+            ?>
+              <!-- creates a list -->
+              <li><a href="Blog.php?category=<?php echo $CategoryName; ?>"><?php echo $CategoryName ?></a></li>
+
+            <?php } ?>
+
+
+          </ol>
+        </div>
+
+        <div class="p-4">
+          <h4 class="lead">Links</h4>
+          <ol class="list-unstyled">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Features</a></li>
+          </ol>
+        </div>
+      </aside><!-- /.blog-sidebar -->
 
     </div> <!-- /row  -->
   </div><!-- /container  -->
