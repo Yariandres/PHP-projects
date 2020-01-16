@@ -81,7 +81,7 @@ Confirm_Login();
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="display-4 my-5">Blog Dashboard</h1>
+          <h1 class="lead my-5">Blog Dashboard</h1>
         </div>
 
         <div class="col-lg-3">
@@ -127,9 +127,11 @@ Confirm_Login();
         <div class="card text-center bg-dark text-light">
           <div class="card-body">
             <h1 class="lead">Posts</h1>
-            <h4 class="display-4">
+            <h4 class="lead">
               <i class="fa fa-book"></i>
-              100
+              <?php
+              TotalPosts();
+              ?>
             </h4>
           </div><!-- /card-body  -->
         </div><!-- /card  -->
@@ -137,9 +139,11 @@ Confirm_Login();
         <div class="card text-center bg-dark text-light">
           <div class="card-body">
             <h1 class="lead">Categories</h1>
-            <h4 class="display-4">
+            <h4 class="lead">
               <i class="fa fa-folder"></i>
-              100
+              <?php
+              TotalCategories();
+              ?>
             </h4>
           </div><!-- /card-body  -->
         </div><!-- /card  -->
@@ -147,25 +151,113 @@ Confirm_Login();
         <div class="card text-center bg-dark text-light">
           <div class="card-body">
             <h1 class="lead">Admins</h1>
-            <h4 class="display-4">
+            <h4 class="lead">
               <i class="fa fa-user"></i>
-              100
+              <?php
+              TotalAdmins();
+              ?>
             </h4>
           </div><!-- /card-body  -->
         </div><!-- /card  -->
 
         <div class="card text-center bg-dark text-light">
           <div class="card-body">
-            <h1 class="lead">Admins</h1>
-            <h4 class="display-4">
+            <h1 class="lead">Comments</h1>
+            <h4 class="lead">
               <i class="fa fa-comments"></i>
-              100
+              <?php
+              TotalComments();
+              ?>
             </h4>
           </div><!-- /card-body  -->
         </div><!-- /card  -->
 
       </div><!-- /col  -->
+
       <!-- RIGHT SIDE  -->
+      <div class="col-lg-10">
+        <h1 class="lead">
+          Top Posts
+        </h1>
+        <table class="table table-striped table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Date & Time</th>
+              <th>Author</th>
+              <th>Comments</th>
+              <th>Details</th>
+            </tr>
+          </thead> <!-- /thead  -->
+
+          <?php
+
+          // connects to DB 
+          global $connectingDB;
+
+          $SrNo = 0;
+
+          $sql = "SELECT * FROM posts ORDER BY id desc LIMIT 0,9";
+          $stmt = $connectingDB->query($sql);
+
+          while ($DataRows = $stmt->fetch()) {
+            $PostId = $DataRows["id"];
+            $DateTime = $DataRows["datetime"];
+            $Author = $DataRows["author"];
+            $Title = $DataRows["title"];
+            $SrNo++;
+
+          ?>
+            <tbody>
+              <tr>
+                <td><?php echo htmlentities($SrNo); ?></td>
+                <td><?php echo htmlentities($Title); ?></td>
+                <td><?php echo htmlentities($DateTime); ?></td>
+                <td><?php echo htmlentities($Author); ?></td>
+                <td>
+                  <!-- SPAN  -->
+                  <?php
+                  $Total = ApprovedComments($PostId);
+
+                  // if 0 comments dont show count <span>
+                  if ($Total > 0) {
+                    echo '<span class="badge badge-success">' . $Total . '</span>';
+                  } else {
+                    echo '<span> </span>';
+                  }
+                  ?>
+                  <!-- /SPAN  -->
+
+                  <!-- SPAN -->
+                  <?php
+
+                  $Total = DisApprovedComments($PostId);
+
+                  // if 0 comments dont show count <span>
+                  if ($Total > 0) {
+                    echo '<span class="badge badge-danger">' . $Total . '</span>';
+                  } else {
+                    echo '<span> </span>';
+                  }
+                  ?>
+                  <!-- /SPAN -->
+                </td>
+
+                <td>
+                  <a href="FullPost.php?id=<?php echo $PostId; ?>" target="_blank">
+                    <span class="btn btn-info">Preview</span>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+
+          <?php } ?>
+          <!-- end-while loop  -->
+
+        </table><!-- /table  -->
+      </div><!-- /col  -->
+
 
     </div><!-- /row  -->
   </section><!-- /section  -->

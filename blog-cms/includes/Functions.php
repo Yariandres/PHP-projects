@@ -57,3 +57,120 @@ function Confirm_Login()
     Redirect_to("Login.php");
   }
 }
+
+// fectches posts from DB
+function TotalPosts()
+{
+  // connecting DB 
+  global $connectingDB;
+
+  // counts al table in DB
+  $sql = "SELECT COUNT(*) FROM posts";
+
+  $stmt = $connectingDB->query($sql);
+
+  // fetches as array 
+  $TotalRows = $stmt->fetch();
+
+  // converts to string
+  $TotalPosts = array_shift($TotalRows);
+
+  echo $TotalPosts;
+}
+
+
+// fectches categories from DB
+function TotalCategories()
+{
+  // connecting DB 
+  global $connectingDB;
+
+  // counts al table in DB
+  $sql = "SELECT COUNT(*) FROM category";
+
+  $stmt = $connectingDB->query($sql);
+
+  // fetches as array 
+  $TotalRows = $stmt->fetch();
+
+  // converts to string
+  $TotalCategories = array_shift($TotalRows);
+
+  echo $TotalCategories;
+}
+
+// fectches admins, from DB
+function TotalAdmins()
+{
+  // connecting DB 
+  global $connectingDB;
+
+  // counts al table in DB
+  $sql = "SELECT COUNT(*) FROM admins";
+
+  $stmt = $connectingDB->query($sql);
+
+  // fetches as array 
+  $TotalRows = $stmt->fetch();
+
+  // converts to string
+  $TotalAmins = array_shift($TotalRows);
+
+  echo $TotalAmins;
+}
+
+
+// fectches comments from DB
+function TotalComments()
+{
+  // connecting DB 
+  global $connectingDB;
+
+  // counts al table in DB
+  $sql = "SELECT COUNT(*) FROM comments";
+
+  $stmt = $connectingDB->query($sql);
+
+  // fetches as array 
+  $TotalRows = $stmt->fetch();
+
+  // converts to string
+  $TotalComments = array_shift($TotalRows);
+
+  echo $TotalComments;
+}
+
+// gets comments per post 
+function ApprovedComments($PostId)
+{
+  // connects to DB 
+  global $connectingDB;
+
+  $sql_Approve = "SELECT COUNT(*) FROM comments WHERE post_id='$PostId' AND status='ON'";
+  $stmt_Approve = $connectingDB->query($sql_Approve);
+
+  // returns array
+  $RowsTotal = $stmt_Approve->fetch();
+
+  // converts to string to use it
+  $Total = array_shift($RowsTotal);
+
+  return $Total;
+}
+
+function DisApprovedComments($PostId)
+{
+  // connects to DB 
+  global $connectingDB;
+
+  $sql_DisApprove = "SELECT COUNT(*) FROM comments WHERE post_id='$PostId' AND status='OFF'";
+  $stmt_DisApprove = $connectingDB->query($sql_DisApprove);
+
+  // returns array
+  $RowsTotal = $stmt_DisApprove->fetch();
+
+  // converts to string to use it
+  $Total = array_shift($RowsTotal);
+
+  return $Total;
+}

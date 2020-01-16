@@ -182,7 +182,36 @@ Confirm_Login();
                 </td>
                 <td><?php echo $Admin; ?></td>
                 <td><img src="Uploads/<?php echo $Image; ?>" width="100" height="70" class="img-thumbnail"></td>
-                <td>Comments</td>
+
+                <td>
+                  <!-- SPAN  -->
+                  <?php
+                  $Total = ApprovedComments($Id);
+
+                  // if 0 comments dont show count <span>
+                  if ($Total > 0) {
+                    echo '<span class="badge badge-success">' . $Total . '</span>';
+                  } else {
+                    echo '<span> </span>';
+                  }
+                  ?>
+                  <!-- /SPAN  -->
+
+                  <!-- SPAN  -->
+                  <?php
+
+                  $Total = DisApprovedComments($Id);
+
+                  // if 0 comments dont show count <span>
+                  if ($Total > 0) {
+                    echo '<span class="badge badge-danger">' . $Total . '</span>';
+                  } else {
+                    echo '<span> </span>';
+                  }
+                  ?>
+                  <!-- /SPAN  -->
+                </td>
+
                 <td>
                   <a href="EditPost.php?id=<?php echo $Id; ?>"><span class="btn btn-warning">Edit</span></a>
                   <a href="DeletePost.php?id=<?php echo $Id; ?>"><span class="btn btn-danger">Delete</span></a>
