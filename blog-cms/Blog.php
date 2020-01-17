@@ -21,9 +21,9 @@
 
 <body>
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-light py-2">
     <div class="container">
-      <a href="Blog.php" class="navbar-brand">Baby Wearing Blog</a>
+      <a href="Blog.php?page=1" class="navbar-brand">Baby Wearing Blog</a>
 
       <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@
         <ul class="navbar-nav m-auto">
 
           <li class="nav-item">
-            <a href="Blog.php" class="nav-link">Home</a>
+            <a href="Blog.php?page=1" class="nav-link">Home</a>
           </li>
 
           <li class="nav-item">
@@ -41,7 +41,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="Blog.php" class="nav-link">Blog</a>
+            <a href="Blog.php?page=1" class="nav-link">Blog</a>
           </li>
 
           <li class="nav-item">
@@ -54,20 +54,15 @@
         </ul><!-- /ul  -->
 
         <ul class="navbar-nav ml-auto">
-          <form class="form-inline d-none d-sm-block" action="Blog.php">
-            <input class="form-control mr-2" type="text" name="Search" placeholder="Search">
-            <button class="btn btn-primary" name="SearchButton">Go</button>
-
-
-          </form>
+          <a class="btn btn-outline-info text-info" name="SearchButton">Book An Appointment</a>
         </ul><!-- /ul  -->
-
       </div><!-- /collapse  -->
     </div><!-- /container  -->
   </nav>
   <!-- /NAVBAR -->
 
   <div class="container">
+    <hr>
     <div class="jumbotron">
       <h1 class="display-4">Baby Wearing Blog</h1>
     </div>
@@ -86,7 +81,6 @@
 
         <?php
         global $connectingDB;
-
         // SQL query when search button is active
         if (isset($_GET["SearchButton"])) {
           $Search = $_GET["Search"];
@@ -115,9 +109,15 @@
 
           // get from the DB
           $sql = "SELECT * FROM posts ORDER BY id desc LIMIT $ShowPostFrom,4";
-
-
           $stmt = $connectingDB->query($sql);
+        } elseif (isset($_GET["category"])) {
+          $Category = $_GET["category"];
+
+          // using PDO name parameter 
+          $sql = "SELECT * FROM posts WHERE category=:categoryName ORDER BY id desc";
+          $stmt = $connectingDB->prepare($sql);
+          $stmt->bindValue(':categoryName', $Category);
+          $stmt->execute();
         } else {
           $sql = "SELECT * FROM posts ORDER BY id desc LIMIT 0,4";
           $stmt = $connectingDB->query($sql);
@@ -176,7 +176,7 @@
             if (isset($Page)) {
               if ($Page > 1) { ?>
                 <li class="page-item">
-                  <a class="page-link" href="Blog.php?page=<?php echo $Page + 1; ?>">&laquo;</a>
+                  <a class="page-link" href="Blog.php?page=<?php echo $Page - 1; ?>">&laquo;</a>
                 </li>
             <?php }
             } ?>
@@ -205,16 +205,25 @@
 
 
             // itarate through post pagination 
-            for ($i = 1; $i <= $PostPagination; $i++) {
+            for ($i = 1; $i < $PostPagination; $i++) {
               if (isset($Page)) {
-                if ($i == $Page) {
-                  echo '<li class="page-item active"><a class="page-link" href="Blog.php?page=' . $i . '">' . $i . '</a></li>';
-                } else {
-                  echo '<li class="page-item"><a class="page-link" href="Blog.php?page=' . $i . '">' . $i . '</a></li>';
-                }
-              }
-            } //end of forloop
-            ?>
+                if ($i == $Page) { ?>
+                  <li class="page-item active">
+                    <a href="Blog.php?page=<?php echo $i; ?>" class="page-link">
+                      <?php echo $i; ?>
+                    </a>
+                  </li>
+                <?php
+                } else { ?>
+                  <li class="page-item">
+                    <a href="Blog.php?page=<?php echo $i; ?>" class="page-link">
+                      <?php echo $i; ?>
+                    </a>
+                  </li>
+            <?php } // end of else
+              } // end of if-condition
+            } ?>
+            <!-- // end of for-loop -->
 
             <!-- creating forward button  -->
             <?php
@@ -231,14 +240,68 @@
       </div><!-- /col -->
 
       <aside class="col-md-4 blog-sidebar">
-        <div class="p-4 mb-3 bg-light rounded">
-          <h4 class="font-italic">About</h4>
+        <!-- CATEGORIES -->
+        <div class="p-4">
+          <h4 class="lead">Categories</h4>
+          <ol class="list-unstyled mb-0">
+            <?php
+            // connects to DB
+            global $connectingDB;
+
+            // feching from DB
+            $sql = "SELECT * FROM category ORDER BY id desc";
+
+            $stmt = $connectingDB->query($sql);
+
+            while ($DataRows = $stmt->fetch()) {
+              $CategoryId = $DataRows["id"];
+              $CategoryName = $DataRows["title"];
+            ?>
+              <!-- creates a list -->
+              <nav class="navbar-light">
+                <li class="nav-item">
+                  <a href="Blog.php?category=<?php echo $CategoryName; ?>" style="color: rgba(0, 0, 0, 0.5);">
+                    <?php echo $CategoryName ?>
+                  </a>
+                </li>
+              </nav>
+            <?php } ?>
+          </ol>
+        </div>
+        <!-- /CATEGORIES  -->
+
+        <hr>
+        <!-- RECENT POSTS -->
+        <div class="p-4">
+          <h4 class="lead">Recent Posts</h4>
+          <ol class="list-unstyled">
+            <li><a href="#" style="
+    color: rgba(0, 0, 0, 0.5);">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Features</a></li>
+          </ol>
+        </div>
+        <!-- /RECENT POSTS -->
+
+        <hr>
+        <div class="p-4 mb-5 bg-light rounded">
+          <h4 class="lead">About</h4>
           <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
         </div>
-
+        <hr>
+        <!-- Search content  -->
+        <ul class="navbar-nav my-5">
+          <h4 class="lead">Search Content</h4>
+          <form class="form-inline d-none d-sm-block" action="Blog.php">
+            <input class="form-control mr-2" type="text" name="Search" placeholder="Search">
+            <button class="btn btn-outline-primary" name="SearchButton">Go</button>
+          </form>
+        </ul><!-- /ul  -->
+        <hr>
         <!-- subscribe form -->
-        <div class="p-4">
-          <h4>Subscribe</h4>
+        <div class="my-5">
+          <h4 class="lead">Subscribe</h4>
           <form method="POST">
             <div class="form-group">
               <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name...">
@@ -251,44 +314,7 @@
             <small id="emailHelp" class="form-text text-muted mt-4">We'll never share your email with anyone else.</small>
           </form>
         </div><!-- /subscribe form -->
-        <hr>
-
-        <div class="p-4">
-          <h4 class="lead">Categories</h4>
-          <ol class="list-unstyled mb-0">
-
-            <?php
-            // connects to DB
-            global $connectingDB;
-
-            $sql = "SELECT * FROM category ORDER BY id desc";
-
-            $stmt = $connectingDB->query($sql);
-
-            while ($DataRows = $stmt->fetch()) {
-              $CategoryId = $DataRows["id"];
-              $CategoryName = $DataRows["title"];
-            ?>
-              <!-- creates a list -->
-              <li><a href="Blog.php?category=<?php echo $CategoryName; ?>"><?php echo $CategoryName ?></a></li>
-
-            <?php } ?>
-
-
-          </ol>
-        </div>
-
-        <div class="p-4">
-          <h4 class="lead">Links</h4>
-          <ol class="list-unstyled">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Features</a></li>
-          </ol>
-        </div>
       </aside><!-- /.blog-sidebar -->
-
     </div> <!-- /row  -->
   </div><!-- /container  -->
   <!-- /HEADER  -->
