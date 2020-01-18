@@ -53,7 +53,7 @@ Confirm_Login();
           </li>
 
           <li class="nav-item">
-            <a href="admin.php" class="nav-link">Manage Admins</a>
+            <a href="Admins.php" class="nav-link">Manage Admins</a>
           </li>
 
           <li class="nav-item">

@@ -112,14 +112,6 @@ if (isset($_POST["Submit"])) {
   </nav>
   <!-- /NAVBAR -->
 
-  <!-- <div class="container">
-    <div class="jumbotron">
-      <h1 class="display-4">Baby Wearing Blog</h1>
-    </div>
-  </div> -->
-
-
-
   <!-- MAIN  -->
   <div class="container mb-5">
     <div class="row">
@@ -258,11 +250,101 @@ if (isset($_POST["Submit"])) {
       <!-- /COMMNET FORM  -->
 
 
-      <!-- SIDEBAR  -->
-      <div class="col-sm-4">
-        <p class="display-4">SIDE BAR</p>
-      </div><!-- /col  -->
-      <!-- /SIDEBAR  -->
+      <!-- SIDEAREA -->
+      <aside class="col-md-4 blog-sidebar">
+        <!-- CATEGORIES -->
+        <div class="p-4">
+          <h4 class="lead">Categories</h4>
+          <ol class="list-unstyled mb-0">
+            <?php
+            // connects to DB
+            global $connectingDB;
+
+            // feching from DB
+            $sql = "SELECT * FROM category ORDER BY id desc";
+
+            $stmt = $connectingDB->query($sql);
+
+            while ($DataRows = $stmt->fetch()) {
+              $CategoryId = $DataRows["id"];
+              $CategoryName = $DataRows["title"];
+            ?>
+              <!-- creates a list -->
+              <nav class="navbar-light">
+                <li class="nav-item">
+                  <a href="Blog.php?category=<?php echo $CategoryName; ?>" style="color: rgba(0, 0, 0, 0.5);">
+                    <?php echo $CategoryName ?>
+                  </a>
+                </li>
+              </nav>
+            <?php } ?>
+          </ol>
+        </div>
+        <!-- /CATEGORIES  -->
+
+        <hr>
+        <!-- RECENT POSTS -->
+        <div class="p-4">
+          <h4 class="lead">Popular Posts</h4>
+          <ol class="list-unstyled">
+            <?php
+            // connects to DB
+
+            global $connectingDB;
+
+            // feching from DB
+            $sql = "SELECT * FROM posts ORDER BY id desc LIMIT 0,5";
+
+            $stmt = $connectingDB->query($sql);
+
+            while ($DataRows = $stmt->fetch()) {
+              $Id = $DataRows["id"];
+              $Title = $DataRows["title"];
+              $DateTime = $DataRows["datetime"];
+              $Image = $DataRows["image"];
+            ?>
+              <li>
+                <img src="Uploads/<?php echo htmlentities($Image); ?>" class="col-auto d-none d-lg-block" alt="image post">
+                <a href="FullPost.php?id=<?php echo htmlentities($Id) ?>" target="_blank">
+                  <h6 class="lead mt-3"><?php echo htmlentities($Title); ?></h6>
+                </a>
+                <small class="text-muted"><?php echo htmlentities($DateTime); ?></small>
+              </li>
+              <hr>
+            <?php } ?>
+            <!-- /while loop  -->
+          </ol>
+        </div>
+        <!-- /RECENT POSTS -->
+
+        <hr>
+        <!-- Search content  -->
+        <ul class="navbar-nav my-5">
+          <h4 class="lead">Search Content</h4>
+          <form class="form-inline d-none d-sm-block" action="Blog.php">
+            <input class="form-control mr-2" type="text" name="Search" placeholder="Search">
+            <button class="btn btn-outline-primary" name="SearchButton">Go</button>
+          </form>
+        </ul><!-- /ul  -->
+        <hr>
+        <!-- subscribe form -->
+        <div class="my-5">
+          <h4 class="lead">Subscribe</h4>
+          <form method="POST">
+            <div class="form-group">
+              <input type="text" name="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name...">
+            </div>
+
+            <div class="form-group">
+              <input type="email" name="email" class="form-control" id="exampleInputEmail2" aria-describedby="emailHelp" placeholder="Email...">
+            </div>
+            <button type="submit" name="subscribe" class="btn btn-outline-primary">Subscribe</button>
+            <small id="emailHelp" class="form-text text-muted mt-4">We'll never share your email with anyone else.</small>
+          </form>
+        </div><!-- /subscribe form -->
+      </aside><!-- /.blog-sidebar -->
+      <!-- /SIDEAREA  -->
+
     </div> <!-- /row  -->
   </div><!-- /container  -->
   <!-- /MAIN  -->

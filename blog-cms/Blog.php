@@ -37,20 +37,17 @@
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">About us</a>
+            <a href="#" class="nav-link">About</a>
           </li>
 
           <li class="nav-item">
-            <a href="Blog.php?page=1" class="nav-link">Blog</a>
+            <a href="#" class="nav-link">Events</a>
           </li>
 
           <li class="nav-item">
             <a href="#" class="nav-link">Contact us</a>
           </li>
 
-          <li class="nav-item">
-            <a href="#" class="nav-link">Features</a>
-          </li>
         </ul><!-- /ul  -->
 
         <ul class="navbar-nav ml-auto">
@@ -165,12 +162,10 @@
         <?php } ?>
 
         <hr>
-
         <!-- PAGINATION  -->
+
         <nav aria-label="Page navigation">
-
           <ul class="pagination">
-
             <!-- creating backward button  -->
             <?php
             if (isset($Page)) {
@@ -238,7 +233,9 @@
           </ul>
         </nav>
       </div><!-- /col -->
+      <!-- /PAGINATION   -->
 
+      <!-- SIDEAREA -->
       <aside class="col-md-4 blog-sidebar">
         <!-- CATEGORIES -->
         <div class="p-4">
@@ -273,22 +270,43 @@
         <hr>
         <!-- RECENT POSTS -->
         <div class="p-4">
-          <h4 class="lead">Recent Posts</h4>
+          <h4 class="lead">Popular Posts</h4>
           <ol class="list-unstyled">
-            <li><a href="#" style="
-    color: rgba(0, 0, 0, 0.5);">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
-            <li><a href="#">Features</a></li>
+            <?php
+            // connects to DB
+
+            global $connectingDB;
+
+            // feching from DB
+            $sql = "SELECT * FROM posts ORDER BY id desc LIMIT 0,5";
+
+            $stmt = $connectingDB->query($sql);
+
+            while ($DataRows = $stmt->fetch()) {
+              $Id = $DataRows["id"];
+              $Title = $DataRows["title"];
+              $DateTime = $DataRows["datetime"];
+              $Image = $DataRows["image"];
+            ?>
+              <li>
+                <img src="Uploads/<?php echo htmlentities($Image); ?>" class="col-auto d-none d-lg-block" alt="image post">
+                <a href="FullPost.php?id=<?php echo htmlentities($Id) ?>" target="_blank">
+                  <h6 class="lead mt-3"><?php echo htmlentities($Title); ?></h6>
+                </a>
+                <small class="text-muted"><?php echo htmlentities($DateTime); ?></small>
+              </li>
+              <hr>
+            <?php } ?>
+            <!-- /while loop  -->
           </ol>
         </div>
         <!-- /RECENT POSTS -->
 
-        <hr>
+        <!-- <hr>
         <div class="p-4 mb-5 bg-light rounded">
           <h4 class="lead">About</h4>
           <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-        </div>
+        </div> -->
         <hr>
         <!-- Search content  -->
         <ul class="navbar-nav my-5">
@@ -315,10 +333,11 @@
           </form>
         </div><!-- /subscribe form -->
       </aside><!-- /.blog-sidebar -->
+      <!-- /SIDEAREA  -->
+
     </div> <!-- /row  -->
   </div><!-- /container  -->
   <!-- /HEADER  -->
-
 
   <!-- FOOTER  -->
   <footer class="bg-dark text-light">
