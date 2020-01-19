@@ -183,33 +183,29 @@ if (isset($_POST["Submit"])) {
         echo SuccessMessage();
         ?>
 
-        <form action="AddNewPost.php" method="post" enctype="multipart/form-data">
+        <form action="MyProfile.php" method="post" enctype="multipart/form-data">
           <div class="card mb-3">
+
+            <div class="card-header">
+              <h4 class="lead">Edit Profile</h4>
+            </div>
+
             <div class="card-body bg-dark">
 
               <div class="form-group">
-                <label class="text-light" for="title"> Post Title</label>
-                <input class="form-control" type="text" name="PostTitle" id="title">
+
+                <input class="form-control" type="text" name="Name" id="profileName" placeholder="Your Name">
               </div>
 
               <div class="form-group">
-                <label class="text-light" for="CategoryTitle"><span class="FieldInfo">Chose Category</span></label>
-                <select class="form-control-sm" id="CategoryTitle" name="Category">
-                  <?php
+                <input class="form-control" type="text" name="Headline" id="title" placeholder="Headline">
+                <small class="text-light">Add a profession</small>
+                <span class="text-danger">no more than 12 characters</span>
+              </div>
 
-                  // fetching all the categories from category table
-                  global $connectingDB;
-                  $sql = "SELECT id, title FROM category";
-                  $stmt = $connectingDB->query($sql);
-
-                  while ($DataRows = $stmt->fetch()) {
-                    $Id = $DataRows["id"];
-                    $CategoryName = $DataRows["title"];
-
-                  ?>
-                    <option><?php echo $CategoryName; ?></option>
-                  <?php } ?>
-                </select>
+              <div class="form-group">
+                <label for="Bio"><span class="FieldInfo text-light">Bio :</span></label>
+                <textarea class="form-control" id="Post" name="Bio"></textarea>
               </div>
 
               <div class="form-group">
@@ -217,11 +213,6 @@ if (isset($_POST["Submit"])) {
                   <input type="file" name="Image" id="imageSelect" class="form-control-sm text-light custom-file-input">
                   <label for="imageSelect" class="custom-file-label">Select image</label>
                 </div>
-              </div>
-
-              <div class="form-group">
-                <label for="Post"><span class="FieldInfo text-light">Post :</span></label>
-                <textarea class="form-control" id="Post" name="PostDescription"></textarea>
               </div>
 
               <div class="row">
