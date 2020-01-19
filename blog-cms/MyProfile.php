@@ -21,55 +21,57 @@ $sql = "SELECT * FROM admins WHERE id='$AdminId'";
 $stmt = $connectingDB->query($sql);
 
 // gets and shows data 
-while ($DataRows = $stmt->fetch()) {
-  $ExistingName = $DataRows["aname"];
+while ($DataRows    = $stmt->fetch()) {
+  $ExistingName     = $DataRows["aname"];
+  $ExistingUser     = $DataRows["username"];
+  $ExistingHeadline = $DataRows["aheadline"];
+  $ExistingBio      = $DataRows["abio"];
+  $ExistingImage    = $DataRows["aimage"];
 }
 
 if (isset($_POST["Submit"])) {
-  $PostTitle = $_POST["PostTitle"];
-  $Category = $_POST["Category"];
+  $Aname        = $_POST["Name"];
+  $Aheadline    = $_POST["Headline"];
+  $ABio         = $_POST["Bio"];
   // to grab the image file 
-  $Image = $_FILES["Image"]["name"];
-  // saves image to Upload/folder
-  $Target = "Uploads/" . basename($_FILES["Image"]["name"]);
-  $PostText = $_POST["PostDescription"];
-  $Admin = $_SESSION["UserName"];
-  $CurrentTime = time();
-  $DateTime = strftime("%d  %B - %Y - %H:%M:%S", $CurrentTime);
+  $Image        = $_FILES["Image"]["name"];
 
-  if (empty($PostTitle)) {
-    $_SESSION["ErrorMessage"] = "Title cant be empty";
-    Redirect_to("AddNewPost.php");
-  } elseif (strlen($PostTitle) < 5) {
-    $_SESSION["ErrorMessage"] = "Post title should be greater than 5 charecters";
-    Redirect_to("AddNewPost.php");
-  } else if (strlen($PostText) > 9999) {
-    $_SESSION["ErrorMessage"] = "Post description should be less than 10000 charecters";
-    Redirect_to("AddNewPost.php");
+  // saves image to Upload/folder
+  $Target       = "Images/" . basename($_FILES["Image"]["name"]);
+
+  if (strlen($$Aheadline) > 12) {
+    $_SESSION["ErrorMessage"] = "Headline should not be greater than 12 charecters";
+    Redirect_to("MyProfile.php");
+  } else if (strlen($$ABio) > 500) {
+    $_SESSION["ErrorMessage"] = "Bio should be less than 500 charecters";
+    Redirect_to("MyProfile.php");
   } else {
 
     global $connectingDB;
 
-    // query to insert Post in the DB when everything is fine
-    $sql = "INSERT INTO posts(datetime, title, category, author, image,post)";
-    $sql .= "VALUES(:dateTime, :postTitle, :categoryName, :adminName, :imageName, :postDescription)";
+    // if image is not empty then update image    
+    if (!empty($_FILES['Image']['name'])) {
+      $sql = "UPDATE admins 
+              SET aname ='$Aname', aheadline = '$Aheadline', abio = '$ABio', aimage = '$Image' 
+              WHERE id = '$AdminId'";
+    } else {
 
-    $stmt = $connectingDB->prepare($sql);
-    $stmt->bindValue(':dateTime', $DateTime);
-    $stmt->bindValue(':postTitle', $PostTitle);
-    $stmt->bindValue(':categoryName', $Category);
-    $stmt->bindValue(':adminName', $Admin);
-    $stmt->bindValue(':imageName', $Image);
-    $stmt->bindValue(':postDescription', $PostText);
-    $Execute = $stmt->execute();
+      // otherwise do not update image 
+      $sql = "UPDATE admins 
+              SET aname ='$Aname', aheadline = '$Aheadline', abio = '$ABio' 
+              WHERE id = '$AdminId'";
+    }
+
+    $Execute = $connectingDB->query($sql);
+
     move_uploaded_file($_FILES["Image"]["tmp_name"], $Target);
 
     if ($Execute) {
-      $_SESSION["SuccessMessage"] = "Post with id : " . $connectingDB->lastInsertId() . " Added Successfully";
-      Redirect_to("AddNewPost.php");
+      $_SESSION["SuccessMessage"] = "Details Updated Successfully";
+      Redirect_to("MyProfile.php");
     } else {
       $_SESSION["ErrorMessage"] = "Something went wrong, please try again!";
-      Redirect_to("AddNewPost.php");
+      Redirect_to("MyProfile.php");
     }
   }
 }
@@ -135,8 +137,11 @@ if (isset($_POST["Submit"])) {
         </ul><!-- /ul  -->
 
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item"><a href="Logout.php" class="nav-link"><i class="fa fa-user-times text-danger"></i>
-              Logout</a></li>
+          <li class="nav-item">
+            <a href="Logout.php" class="nav-link">
+              <span class=""><?php echo $ExistingUser; ?></span>
+              <i class="fa fa-user-times text-danger mx-3"></i>Logout</a>
+          </li>
         </ul><!-- /ul  -->
 
       </div><!-- /collapse  -->
@@ -149,7 +154,8 @@ if (isset($_POST["Submit"])) {
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="lead"><i class="fa fa-user"></i> Edit Profile</h1>
+          <h1 class="lead"><i class="fa fa-user mr-3"></i><?php echo $ExistingUser; ?></h1>
+          <small class="font-italic"><?php echo $ExistingHeadline; ?></small>
         </div>
       </div> <!-- /row  -->
     </div><!-- /container  -->
@@ -167,8 +173,8 @@ if (isset($_POST["Submit"])) {
           </div><!-- /card-header  -->
 
           <div class="card-body">
-            <img src="img/avatar.JPG" class="block img-fluid" alt="">
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore repudiandae facilis </p>
+            <img src="Images/<?php echo $ExistingImage; ?>" class=" block img-fluid" alt="">
+            <p class="card-text mt-3"><?php echo $ExistingBio; ?></p>
           </div>
         </div>
       </div>
