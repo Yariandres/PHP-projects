@@ -133,14 +133,16 @@
 
           <div class="card">
             <div class="card-body">
-              <h4 class="card-title mt-3">
-                <?php echo htmlentities($PostTitle); ?>
-              </h4>
+              <a href="FullPost.php?id=<?php echo $PostId; ?>">
+                <h4 class="card-title my-3 lead">
+                  <?php echo htmlentities($PostTitle); ?>
+                </h4>
+              </a>
 
               <img class="card-img-top img-thumbnail" src="Uploads/<?php echo htmlentities($Image); ?>" alt="Post image" height="100">
 
-              <small class="text-muted">Category: <?php echo $Category ?> & </small>
-              <small class="text-muted">Written by: <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
+              <small class="text-muted">Category: <a href="Blog.php?category=<?php echo $Category ?>"><?php echo $Category ?></a> & </small>
+              <small class="text-muted">Written by: <a href="Profile.php?username=<?php echo htmlentities($Admin); ?>"><?php echo htmlentities($Admin); ?></a> On <?php echo htmlentities($DateTime); ?></small>
 
               <span class="badge btn-outline-info float-right">Comments <?php echo ApprovedComments($PostId); ?></span>
 
@@ -268,6 +270,16 @@
         <!-- /CATEGORIES  -->
 
         <hr>
+        <!-- Search content  -->
+        <ul class="navbar-nav my-5">
+          <h4 class="lead">Search Posts</h4>
+          <form class="form-inline d-none d-sm-block" action="Blog.php">
+            <input class="form-control mr-2" type="text" name="Search" placeholder="Search">
+            <button class="btn btn-outline-primary" name="SearchButton">Go</button>
+          </form>
+        </ul><!-- /ul  -->
+
+        <hr>
         <!-- RECENT POSTS -->
         <div class="p-4">
           <h4 class="lead">Popular Posts</h4>
@@ -302,20 +314,6 @@
         </div>
         <!-- /RECENT POSTS -->
 
-        <!-- <hr>
-        <div class="p-4 mb-5 bg-light rounded">
-          <h4 class="lead">About</h4>
-          <p class="mb-0">Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-        </div> -->
-        <hr>
-        <!-- Search content  -->
-        <ul class="navbar-nav my-5">
-          <h4 class="lead">Search Content</h4>
-          <form class="form-inline d-none d-sm-block" action="Blog.php">
-            <input class="form-control mr-2" type="text" name="Search" placeholder="Search">
-            <button class="btn btn-outline-primary" name="SearchButton">Go</button>
-          </form>
-        </ul><!-- /ul  -->
         <hr>
         <!-- subscribe form -->
         <div class="my-5">

@@ -1,3 +1,35 @@
+<?php require_once("Includes/DB.php"); ?>
+<?php require_once("Includes/Functions.php"); ?>
+<?php require_once("Includes/Sessions.php"); ?>
+
+<?php
+$SearchQueryParameter = $_GET["username"];
+
+// connects to DB
+global $connectingDB;
+
+$sql = "SELECT aname, aheadline, abio, aimage FROM admins WHERE username=:userName";
+
+$stmt = $connectingDB->prepare($sql);
+$stmt->bindValue(':userName',  $SearchQueryParameter);
+$stmt->execute();
+
+$Result = $stmt->rowcount();
+
+if ($Result == 1) {
+  while ($DataRows = $stmt->fetch()) {
+    $ExistingName     = $DataRows["aname"];
+    $ExistingBio      = $DataRows["abio"];
+    $ExistingImage    = $DataRows["aimage"];
+    $ExistingHeadline = $DataRows["aheadline"];
+  }
+} else {
+  $_SESSION["ErrorMessage"] = "Bad request.";
+  Redirect_to("Blog.php?page=1");
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,24 +87,25 @@
   <!-- /NAVBAR -->
 
   <!-- HEADER  -->
-  <header class="text-dark my-5">
+  <header class="text-dark mt-5">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="display-4"><i class="fa fa-user mr-3"></i>Name</h1>
+          <h1 class="display-4"><i class="fa fa-user mr-3"></i><?php echo $ExistingName; ?></h1>
+          <p class="lead"><?php echo $ExistingHeadline; ?></p>
         </div>
       </div> <!-- /row  -->
     </div><!-- /container  -->
   </header>
   <!-- /HEADER  -->
 
-  <section class="container my-5">
+  <section class="container my-4">
     <div class="row">
       <div class="col-md-3">
         <img src="Images/avatar.png" class="d-block img-fluid img-thumbnail rounded-circle" alt="profile image">
       </div>
 
-      <div class="col-md-9">
+      <div class="col-md-9 my-4">
         <div class="card">
           <div class="card-body">
             <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos deserunt adipisci tempore eum voluptates beatae quae minus praesentium laborum aut dolorem, ducimus cumque voluptate recusandae perspiciatis. Alias neque explicabo quasi?</p>

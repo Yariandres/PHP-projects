@@ -33,16 +33,20 @@ if (isset($_POST["Submit"])) {
   $Aname        = $_POST["Name"];
   $Aheadline    = $_POST["Headline"];
   $ABio         = $_POST["Bio"];
+
   // to grab the image file 
   $Image        = $_FILES["Image"]["name"];
 
   // saves image to Upload/folder
   $Target       = "Images/" . basename($_FILES["Image"]["name"]);
 
-  if (strlen($$Aheadline) > 12) {
-    $_SESSION["ErrorMessage"] = "Headline should not be greater than 12 charecters";
+  if (empty($Aname)) {
+    $_SESSION["ErrorMessage"] = "Name can not be empty";
     Redirect_to("MyProfile.php");
-  } else if (strlen($$ABio) > 500) {
+  } else if (strlen($Aheadline) > 30) {
+    $_SESSION["ErrorMessage"] = "Headline should not be greater than 30 charecters";
+    Redirect_to("MyProfile.php");
+  } else if (strlen($ABio) > 500) {
     $_SESSION["ErrorMessage"] = "Bio should be less than 500 charecters";
     Redirect_to("MyProfile.php");
   } else {
@@ -200,18 +204,20 @@ if (isset($_POST["Submit"])) {
 
               <div class="form-group">
 
-                <input class="form-control" type="text" name="Name" id="profileName" placeholder="Your Name">
+                <input class="form-control" type="text" name="Name" id="profileName" value="<?php echo $ExistingName; ?>">
               </div>
 
               <div class="form-group">
-                <input class="form-control" type="text" name="Headline" id="title" placeholder="Headline">
-                <small class="text-light">Add a profession</small>
-                <span class="text-danger">no more than 12 characters</span>
+                <input class="form-control" type="text" name="Headline" id="title" value="<?php echo $ExistingHeadline; ?>">
+                <span class="text-light">Add a profession</span>
+                <span class="text-warning">no more than 30 characters</span>
               </div>
 
               <div class="form-group">
-                <label for="Bio"><span class="FieldInfo text-light">Bio :</span></label>
-                <textarea class="form-control" id="Post" name="Bio"></textarea>
+                <label for="Bio"><span class="FieldInfo text-light">Bio:</span></label>
+                <textarea class="form-control" id="Post" name="Bio">
+                  <?php echo $ExistingBio; ?>
+                </textarea>
               </div>
 
               <div class="form-group">

@@ -66,9 +66,9 @@ if (isset($_POST["Submit"])) {
 
 <body>
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-light py-2">
     <div class="container">
-      <a href="#" class="navbar-brand">Baby Wearing Blog</a>
+      <a href="Blog.php?page=1" class="navbar-brand">Baby Wearing Blog</a>
 
       <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
@@ -78,35 +78,26 @@ if (isset($_POST["Submit"])) {
         <ul class="navbar-nav m-auto">
 
           <li class="nav-item">
-            <a href="Blog.php" class="nav-link">Home</a>
+            <a href="Blog.php?page=1" class="nav-link">Home</a>
           </li>
 
           <li class="nav-item">
-            <a href="#" class="nav-link">About us</a>
+            <a href="#" class="nav-link">About</a>
           </li>
 
           <li class="nav-item">
-            <a href="Blog.php" class="nav-link">Blog</a>
+            <a href="#" class="nav-link">Events</a>
           </li>
 
           <li class="nav-item">
             <a href="#" class="nav-link">Contact us</a>
           </li>
 
-          <li class="nav-item">
-            <a href="#" class="nav-link">Features</a>
-          </li>
         </ul><!-- /ul  -->
 
         <ul class="navbar-nav ml-auto">
-          <form class="form-inline d-none d-sm-block" action="Blog.php">
-            <input class="form-control mr-2" type="text" name="Search" placeholder="Search">
-            <button class="btn btn-primary" name="SearchButton">Go</button>
-
-
-          </form>
+          <a class="btn btn-outline-info text-info" name="SearchButton">Book An Appointment</a>
         </ul><!-- /ul  -->
-
       </div><!-- /collapse  -->
     </div><!-- /container  -->
   </nav>
@@ -141,6 +132,12 @@ if (isset($_POST["Submit"])) {
 
           $sql = "SELECT * FROM posts WHERE id='$PostIdFromURL' ";
           $stmt = $connectingDB->query($sql);
+          $Result = $stmt->rowcount();
+
+          if ($Result != 1) {
+            $_SESSION["ErrorMEssage"] = "Bad request";
+            Redirect_to("Blog.php?page=1");
+          }
         }
 
         // the default SQL query        
@@ -164,8 +161,9 @@ if (isset($_POST["Submit"])) {
                 <?php echo htmlentities($PostTitle); ?>
               </h4>
 
-              <small class="text-muted">Category: <?php echo $Category ?> & </small>
-              <small class="text-muted">Written by: <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
+
+              <small class="text-muted">Category: <a href="Blog.php?category=<?php echo $Category ?>"><?php echo $Category ?></a> & </small>
+              <small class="text-muted">Written by: <a href="Profile.php?username=<?php echo htmlentities($Admin); ?>"><?php echo htmlentities($Admin); ?></a> On <?php echo htmlentities($DateTime); ?></small>
 
               <span class="badge badge-light float-right">Comments <?php echo ApprovedComments($PostId); ?></span>
               <hr>
