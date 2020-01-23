@@ -58,11 +58,40 @@
   </nav>
   <!-- /NAVBAR -->
 
-  <div class="container">
-    <hr>
-    <div class="jumbotron">
-      <h1 class="display-4">Baby Wearing Blog</h1>
+
+  <hr>
+  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="Images/slider-img-1.png" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="display-4">Second slide label</h5>
+          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="Images/slider-img-2.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="display-4">Second slide label</h5>
+          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="Images/slider-img-3.jpg" class="d-block w-100" alt="...">
+        <div class="carousel-caption d-none d-md-block">
+          <h5 class="display-4">Second slide label</h5>
+          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
     </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
   </div>
 
   <!-- displays alert messages -->
@@ -72,10 +101,9 @@
   ?>
 
   <!-- HEADER  -->
-  <div class="container mb-5">
+  <div class="container my-5">
     <div class="row">
       <div class="col-sm-8">
-
         <?php
         global $connectingDB;
         // SQL query when search button is active
@@ -101,11 +129,11 @@
           if ($Page == 0 || $Page < 1) {
             $ShowPostFrom = 0;
           } else {
-            $ShowPostFrom = ($Page * 4) - 4;
+            $ShowPostFrom = ($Page * 5) - 4;
           }
 
           // get from the DB
-          $sql = "SELECT * FROM posts ORDER BY id desc LIMIT $ShowPostFrom,4";
+          $sql = "SELECT * FROM posts ORDER BY id desc LIMIT $ShowPostFrom,5";
           $stmt = $connectingDB->query($sql);
         } elseif (isset($_GET["category"])) {
           $Category = $_GET["category"];
@@ -116,7 +144,7 @@
           $stmt->bindValue(':categoryName', $Category);
           $stmt->execute();
         } else {
-          $sql = "SELECT * FROM posts ORDER BY id desc LIMIT 0,4";
+          $sql = "SELECT * FROM posts ORDER BY id desc LIMIT 0,5";
           $stmt = $connectingDB->query($sql);
         }
 
@@ -131,36 +159,35 @@
           $PostDescription = $DataRows["post"];
         ?>
 
-          <div class="card">
-            <div class="card-body">
+
+          <div class="post-container">
+            <img class="col-auto float-left" src="Uploads/<?php echo htmlentities($Image); ?>" alt="Post image" height="100">
+
+            <a href="FullPost.php?id=<?php echo $PostId; ?>">
+              <h4 class="card-title my-3 lead">
+                <?php echo htmlentities($PostTitle); ?>
+              </h4>
+            </a>
+
+            <small class="text-muted">Category: <a href="Blog.php?category=<?php echo $Category ?>"><?php echo $Category ?></a> & </small>
+            <small class="text-muted">Written by: <a href="Profile.php?username=<?php echo htmlentities($Admin); ?>"><?php echo htmlentities($Admin); ?></a> On <?php echo htmlentities($DateTime); ?></small>
+
+            <span class="badge btn-outline-info float-right">Comments <?php echo ApprovedComments($PostId); ?></span>
+
+            <?php
+            if (strlen($PostDescription < 250)) {
+              $PostDescription = substr($PostDescription, 0, 250) . '...';
+            }
+            echo '<p class\'lead\'>' . htmlentities($PostDescription) . '</p>';
+            ?>
+
+            <div class="col-auto text-right">
               <a href="FullPost.php?id=<?php echo $PostId; ?>">
-                <h4 class="card-title my-3 lead">
-                  <?php echo htmlentities($PostTitle); ?>
-                </h4>
-              </a>
-
-              <img class="card-img-top img-thumbnail" src="Uploads/<?php echo htmlentities($Image); ?>" alt="Post image" height="100">
-
-              <small class="text-muted">Category: <a href="Blog.php?category=<?php echo $Category ?>"><?php echo $Category ?></a> & </small>
-              <small class="text-muted">Written by: <a href="Profile.php?username=<?php echo htmlentities($Admin); ?>"><?php echo htmlentities($Admin); ?></a> On <?php echo htmlentities($DateTime); ?></small>
-
-              <span class="badge btn-outline-info float-right">Comments <?php echo ApprovedComments($PostId); ?></span>
-
-              <hr>
-
-              <?php
-              if (strlen($PostDescription < 150)) {
-                $PostDescription = substr($PostDescription, 0, 150) . '...';
-              }
-              echo '<p class\'lead\'>' . htmlentities($PostDescription) . '</p>';
-              ?>
-
-              <a href="FullPost.php?id=<?php echo $PostId; ?>" class="float-right">
                 <span class="btn btn-outline-info text-dark">Read More</span>
               </a>
-
-            </div><!-- /card-body  -->
-          </div><!-- /card  -->
+            </div>
+            <hr>
+          </div><!-- /post-container  -->
         <?php } ?>
 
         <hr>
@@ -238,7 +265,7 @@
       <!-- /PAGINATION   -->
 
       <!-- SIDEAREA -->
-      <aside class="col-md-4 blog-sidebar">
+      <aside class="col-md-4 blog-sidebar bg-light rounded">
         <!-- CATEGORIES -->
         <div class="p-4">
           <h4 class="lead">Categories</h4>
@@ -301,7 +328,7 @@
               $Image = $DataRows["image"];
             ?>
               <li>
-                <img src="Uploads/<?php echo htmlentities($Image); ?>" class="col-auto d-none d-lg-block" alt="image post">
+                <img src="Uploads/<?php echo htmlentities($Image); ?>" class="col-auto d-none d-lg-block" height="70" alt="image post">
                 <a href="FullPost.php?id=<?php echo htmlentities($Id) ?>" target="_blank">
                   <h6 class="lead mt-3"><?php echo htmlentities($Title); ?></h6>
                 </a>
@@ -337,38 +364,4 @@
   </div><!-- /container  -->
   <!-- /HEADER  -->
 
-  <!-- FOOTER  -->
-  <footer class="bg-dark text-light">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <p class="lead text-center my-auto">
-            Theme By <a href="https://www.linkedin.com/in/yari-herrera-9677a9160/" target="_blank">Yari Herrera </a>|
-            All rights reserved | &copy; <span id="year"></span>
-          </p>
-        </div><!-- /col  -->
-      </div><!-- /row  -->
-    </div><!-- /container  -->
-  </footer>
-  <!-- /FOOTER  -->
-
-
-
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-  <script>
-    // gets span location 
-    let span = document.querySelector('#year');
-    // new year object stored 
-    let date = new Date();
-    // gets year 
-    let year = date.getFullYear();
-
-    // writes year into span 
-    span.innerText = year;
-  </script>
-</body>
-
-</html>
+  <?php require("Includes/Footer.php"); ?>
